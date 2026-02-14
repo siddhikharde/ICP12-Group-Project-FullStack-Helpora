@@ -7,6 +7,7 @@ import axios from 'axios'
 import Navbar from '../component/Navbar'
 import RegisterBg from "../assets/register-bg.jpg"
 import { useNavigate } from 'react-router'
+import { Eye, EyeClosed } from 'lucide-react'
 
 function Login() {
   const navigate=useNavigate();
@@ -14,6 +15,8 @@ const [user, setUser]=useState({
   email:"",
   password:""
 })
+
+const [showPassword, setShowPassword]=useState(false);
 
 const checkUser=async ()=>{
   const {email, password}=user;
@@ -26,7 +29,7 @@ const checkUser=async ()=>{
    if(res.data.success){
     toast.success("Login successful! ", {id:"loginSuccess"});
    
-    localStorage.setItem("user", JSON.stringify(res.data.user));
+    localStorage.setItem("user", JSON.stringify(res.data.data));
     localStorage.setItem("token", res.data.token);
     setTimeout(()=>{
        navigate("/");
@@ -61,9 +64,17 @@ const checkUser=async ()=>{
           </div>
            <div className='flex flex-col gap-2'>
             <label className=' text-[15px] text-gray-700' >Password</label>
-            <Input placeholder='Password' type='password' onChange={(e)=>{
+           <div className='w-full relative'>
+             <Input placeholder='Password' type={showPassword ? "text" : "password"} onChange={(e)=>{
               setUser({...user , password:e.target.value})
             }} />
+            {showPassword ? <Eye size={20} className='absolute text-[#2b92f3] right-3 top-[50%] translate-y-[-50%]  cursor-pointer' onClick={()=>{
+              setShowPassword(false);
+            }
+            } /> : <EyeClosed size={20} className='absolute text-gray-400 right-3 top-[50%] translate-y-[-50%]  cursor-pointer' onClick={()=>{
+              setShowPassword(true);
+            }}/>}
+           </div>
   </div>
       </div>
 
