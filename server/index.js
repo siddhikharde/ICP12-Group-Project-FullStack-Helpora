@@ -9,13 +9,31 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+app.use(cors());
+app.use(express.json());
+
 
 const connectDB =async ()=>{
    const con=await mongoose.connect(process.env.MONGODB_URI)
    console.log("Connected to MongoDB");
 }
-app.use(cors());
-app.use(express.json());
+
+const checkJwtToken=(req, res, next)=>{
+  const {authorization}=req.headers;
+  const token=authorization && authorization.split(" ")[1];
+  try{
+    const decode=jwt.verify(token,process.env.JWT_SECRET);
+    req.user=decode;
+    console.log("Decoded JWT:", decode);
+    next();
+  }catch(e){
+    return res.json({
+      success:false,
+      message:"Invalid token",
+      data:null,
+    })
+  }
+}
 
 app.get('/', (req, res) => {
   res.send('Welcome to the HELPORA...');
