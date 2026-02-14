@@ -6,8 +6,40 @@ import { toast, Toaster } from 'react-hot-toast'
 import axios from 'axios'
 import Navbar from '../component/Navbar'
 import RegisterBg from "../assets/register-bg.jpg"
+import { useNavigate } from 'react-router'
 
 function Login() {
+  const navigate=useNavigate();
+const [user, setUser]=useState({
+  email:"",
+  password:""
+})
+
+const checkUser=async ()=>{
+  const {email, password}=user;
+  if(!email || !password){
+    toast.error("All fields are required", {id:"loginFailed"});
+    return;
+  }
+ try{
+  const res= await axios.post("http://localhost:8800/login", user);
+   if(res.data.success){
+    toast.success("Login successful! ", {id:"loginSuccess"});
+   
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+    localStorage.setItem("token", res.data.token);
+    setTimeout(()=>{
+       navigate("/");
+    },1000)
+
+   }else{
+    toast.error("Invalid credentials", {id:"loginFailed"});
+   }
+ }catch(e){
+  toast.error("Login failed. Please try again.", {id:"loginFailed"});
+ }
+}
+
   return (
     <>
    <Navbar/>
@@ -24,19 +56,19 @@ function Login() {
            <div className='flex flex-col gap-2'>
             <label className=' text-[15px] text-gray-700 ' >Email</label>
             <Input placeholder='Email' type='email'  onChange={(e)=>{
-              setNewUser({...newUser , email:e.target.value})
+              setUser({...user , email:e.target.value})
             }} />
           </div>
            <div className='flex flex-col gap-2'>
             <label className=' text-[15px] text-gray-700' >Password</label>
             <Input placeholder='Password' type='password' onChange={(e)=>{
-              setNewUser({...newUser , password:e.target.value})
+              setUser({...user , password:e.target.value})
             }} />
   </div>
       </div>
 
      <Button title="Login" size="lg" color="primary" onClick={()=>{
-        saveUser();
+        checkUser();
      }} />
        <div className='text-sm text-gray-600'>
                  Don’t have an account? {" "}
