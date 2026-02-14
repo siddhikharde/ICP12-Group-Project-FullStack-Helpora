@@ -10,7 +10,9 @@ const colorStyle={
 } 
 function Button({title, size="md", color="primary", onClick}) {
   return (
-    <button className={`${sizeStyle[size]} ${colorStyle[color]} rounded-md cursor-pointer transition duration-200`} onClick={onClick}>
+    <button
+    type='button'
+     className={`${sizeStyle[size]} ${colorStyle[color]} rounded-md cursor-pointer transition duration-200`} onClick={onClick}>
       {title}
     </button>
   )
