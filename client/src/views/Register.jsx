@@ -6,9 +6,10 @@ import { toast, Toaster } from 'react-hot-toast'
 import axios from 'axios'
 import RegisterBg from "../assets/register-bg.jpg"
 import Navbar from '../component/Navbar'
-
+import { Eye, EyeClosed } from 'lucide-react'
 function Register() {
 
+  const [showPassword, setShowPassword]=useState(false);
   const [newUser, setNewUser]=useState({
     fullName:"",
     email:"",
@@ -39,7 +40,7 @@ function Register() {
   }
   return (<>
      <Navbar/>
-    <div className='min-h-screen bg-cover bg-center relative  px-4 py-15'
+    <div className='min-h-screen bg-cover bg-center relative  px-4 flex justify-center pt-20'
      style={{ backgroundImage: `url(${RegisterBg})` }}>
      
        <div className="absolute inset-0 bg-black opacity-[60%]"></div>
@@ -61,12 +62,20 @@ function Register() {
               setNewUser({...newUser , email:e.target.value})
             }} />
           </div>
-           <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2'>
             <label className=' text-[15px] text-gray-700' >Password</label>
-            <Input placeholder='Password' type='password' onChange={(e)=>{
+           <div className='w-full relative'>
+             <Input placeholder='Password' type={showPassword ? "text" : "password"} onChange={(e)=>{
               setNewUser({...newUser , password:e.target.value})
             }} />
-          </div>
+            {showPassword ? <Eye size={20} className='absolute text-[#2b92f3] right-3 top-[50%] translate-y-[-50%]  cursor-pointer' onClick={()=>{
+              setShowPassword(false);
+            }
+            } /> : <EyeClosed size={20} className='absolute text-gray-400 right-3 top-[50%] translate-y-[-50%]  cursor-pointer' onClick={()=>{
+              setShowPassword(true);
+            }}/>}
+           </div>
+  </div>
             <div className='flex flex-col gap-2'> 
             <label className=' text-[15px] text-gray-700' >Phone Number</label>
             <Input placeholder='Phone Number' type='text' onChange={(e)=>{
