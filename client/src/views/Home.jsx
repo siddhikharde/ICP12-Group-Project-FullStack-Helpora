@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../component/Navbar";
+import Footer from "../component/Footer";
 import { Axe, Zap, Car, BrushCleaning, Hammer, Toolbox } from "lucide-react";
 import { Link } from "react-router";
 import Ourservices from "../component/Ourservices";
@@ -96,7 +97,7 @@ function Home() {
         />
       </div>
 
-      <div className="my-10 flex flex-col items-center justify-center flex-wrap bg-[#EAF4FD] py-20">
+      <div className="mt-10 flex flex-col items-center justify-center flex-wrap bg-[#EAF4FD] py-20">
         <p className="text-4xl text-center font-bold text-[#2a2e32] mx-4">
           Ready to Book a Service?
         </p>
@@ -118,6 +119,7 @@ function Home() {
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
