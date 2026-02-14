@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import User from './models/user.js';
+import jwt from 'jsonwebtoken';
 dotenv.config();
 
 const app = express();
@@ -92,12 +93,21 @@ app.post('/login',async (req,res)=>{
         message:"Invalid Email or password",
         data:null,
       })
-    }
-    return res.json({
+    }else{
+      const jwtToken=jwt.sign({
+        id:user._id,
+        email:user.email,
+      },process.env.JWT_SECRET,{
+        expiresIn:"1d",
+      })
+
+       return res.json({
       success:true,
       message:"Login successful",
       data:user,
     })
+    }
+   
   });
 
 app.listen(PORT, () => {
