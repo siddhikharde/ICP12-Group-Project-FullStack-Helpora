@@ -1,5 +1,6 @@
 import React from 'react'
 import Input from '../component/Input'
+import Button from '../component/Button'
 
 function Register() {
   return (
@@ -36,7 +37,11 @@ function Register() {
         </div>
       </div>
 
+     <Button title="Register" size="lg" color="primary" onClick={()=>{}} />
+       <div className='text-sm text-gray-600'>
+        Already have an account? <a href="/login" className='text-blue-500 hover:underline'>Login here</a>
      </div>
+    </div>
     </div>
   )
 }
