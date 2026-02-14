@@ -18,7 +18,7 @@ import { model, Schema } from "mongoose";
         type:String,
         required:true
  },service:{
-    default:"Book a service",
+    default:"Book",
     type:String,
     required:true
  }
