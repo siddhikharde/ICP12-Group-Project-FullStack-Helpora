@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv'; 
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 import User from './models/user.js';
 dotenv.config();
 
@@ -32,10 +33,13 @@ app.post('/register',async (req,res)=>{
       data:null,
       });
   }
+
+   const salt = bcrypt.genSaltSync(10);
+  const hashedPassword=await bcrypt.hash(password,salt);
   const newUser = new User({
     fullName,
     email,
-    password,
+    password:hashedPassword,
     phoneNo,
     service
   })
@@ -63,6 +67,7 @@ app.post('/register',async (req,res)=>{
     })
   }}
 );
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
