@@ -68,6 +68,37 @@ app.post('/register',async (req,res)=>{
   }}
 );
 
+app.post('/login',async (req,res)=>{
+  const {email,password}=req.body;
+  if(!email || !password){
+    return res.json({
+      success:false,
+      message:"Email and password are required",
+      data:null,
+    })}
+    const user=await User.findOne({email});
+    if(!user){
+      return res.json({
+         success:false,
+        message:"User not found",
+        data:null,
+       })
+    }
+    const checkPassword=await bcrypt.compare(password,user.password);
+    user.password=undefined;
+    if(!checkPassword){
+      return res.json({
+        success:false,
+        message:"Invalid Email or password",
+        data:null,
+      })
+    }
+    return res.json({
+      success:true,
+      message:"Login successful",
+      data:user,
+    })
+  });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
