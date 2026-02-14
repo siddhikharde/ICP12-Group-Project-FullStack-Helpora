@@ -52,7 +52,7 @@ function Navbar() {
             Login
           </Link>
           <Link
-            to="/signup"
+            to="/register"
             className="text-xl mx-3 bg-[#2b92f3] hover:opacity-70 px-3 py-2 rounded-2xl text-white text-center scale-100 transition-all duration-300"
           >
             Signup

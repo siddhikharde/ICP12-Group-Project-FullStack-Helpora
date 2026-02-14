@@ -39,10 +39,11 @@ function Register() {
   }
   return (<>
      <Navbar/>
-    <div className='min-h-screen bg-cover bg-center relative flex justify-center px-4 py-10'
-     style={{ backgroundImage: `url(${RegisterBg})` }}>   
+    <div className='min-h-screen bg-cover bg-center relative  px-4 py-15'
+     style={{ backgroundImage: `url(${RegisterBg})` }}>
+     
        <div className="absolute inset-0 bg-black opacity-[60%]"></div>
-      <div className='relative  flex justify-center flex-col items-center mx-auto my-10 w-[95%] md:w-[450px] p-5 bg-white opacity-[95%] shadow-lg rounded-lg gap-5 '>
+      <div className='relative  flex justify-center flex-col items-center mx-auto my-10 w-[95%] md:w-[450px] p-5 bg-white opacity-[95%] shadow-lg rounded-lg gap-4 '>
        <div className='flex flex-col items-center justify-center gap-3'>
          <h1 className='text-3xl text-center font-bold text-[#2b92f3]'>Welcome to Helpora</h1>
         <p className='text-lg text-center text-[#554d47]'>Find and book trusted local service providers</p>
