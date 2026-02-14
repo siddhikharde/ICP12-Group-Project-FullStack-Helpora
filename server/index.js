@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv'; 
 import mongoose from 'mongoose';
+import User from './models/user.js';
 dotenv.config();
 
 const app = express();
@@ -22,6 +23,46 @@ app.get('/health',(req,res)=>{
   res.send('Server is healthy');
 })
 
+app.post('/register',async (req,res)=>{
+  const {fullName,email,password, phoneNo, service}=req.body;
+  if(!fullName || !email || !password || !phoneNo || !service){
+    return res.json({
+      success:false,
+      message:"All fields are required",
+      data:null,
+      });
+  }
+  const newUser = new User({
+    fullName,
+    email,
+    password,
+    phoneNo,
+    service
+  })
+
+  const existingUser= await User.findOne({email});
+  if(existingUser){
+    return res.json({
+      success:false,  
+      message:"User already exists",
+      data:null,
+    })
+  }
+  try{
+    const savedUser=await newUser.save();
+    return res.json({
+      success:true,
+      message:"User registered successfully",
+      data:savedUser,
+    })
+  }catch(error){
+    return res.json({
+      success:false,
+      message:"Error registering user",
+      data:error.message,
+    })
+  }}
+);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
