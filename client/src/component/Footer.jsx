@@ -29,27 +29,27 @@ function Footer() {
             Your trusted platform for booking professional services.
           </p>
           <div className="my-5 flex">
-            <a href="https://www.instagram.com/tcf.realty?igsh=ZW0zdzdkcWZ6aHhi">
+            <a href="https://www.instagram.com/p/DUifv3BkT_c/">
               <Instagram
                 size={45}
                 className="border border-gray-300  p-3 m-2 rounded-4xl hover:bg-[#2b92f3] duration-300 cursor-pointer"
               />
             </a>
-            <a href="https://www.facebook.com/p/TCF-Realty-61579154775005/?hr=1&wtsid=rdr_0nfKR3MCDueyW0GPq#">
+            <a href="https://www.facebook.com/LocalServiceAds/">
               <Facebook
                 size={45}
                 className="border border-gray-300  p-3 m-2 rounded-4xl hover:bg-[#2b92f3] duration-300 cursor-pointer"
               />
             </a>
 
-            <a href="https://www.linkedin.com/in/tcf-realty-58767437b/">
+            <a href="https://x.com/">
               <Twitter
                 size={45}
                 className="border border-gray-300  p-3 m-2 rounded-4xl hover:bg-[#2b92f3] duration-300 cursor-pointer"
               />
             </a>
 
-            <a href="https://x.com/realestate?lang=en">
+            <a href="https://www.linkedin.com/pulse/local-service-platform-market-size-2026-innovation-izytf/">
               <Linkedin
                 size={45}
                 className="border border-gray-300 p-3 m-2 rounded-4xl hover:bg-[#2b92f3] duration-300 cursor-pointer"
@@ -104,16 +104,12 @@ function Footer() {
             </div>
             <div className="flex justify-evenly items-start">
               <Phone size={20} className="text-[#2b92f3] mr-4" />
-              <p className="text-start text-sm  w-60 cursor-pointer hover:text-[#2b92f3] duration-300">
-                +91 826019461
-              </p>
+              <a href="tel:+918262019461" className="text-start text-sm  w-60 cursor-pointer hover:text-[#2b92f3] duration-300">+91 8262019461</a>
             </div>
 
             <div className="flex justify-evenly items-start">
               <Mail size={20} className="text-[#2b92f3] mr-4 " />
-              <p className="text-start text-sm  w-60 cursor-pointer hover:text-[#2b92f3] duration-300">
-                info@servicehub.com
-              </p>
+              <a href="mailto:info@servicehub.com" className="text-start text-sm  w-60 cursor-pointer hover:text-[#2b92f3] duration-300">info@servicehub.com</a>
             </div>
           </div>
         </div>

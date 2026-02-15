@@ -1,11 +1,14 @@
 import React from "react";
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
-import { Axe, Zap, Car, BrushCleaning, Hammer, Toolbox } from "lucide-react";
+import { Axe, Zap, Car, BrushCleaning, Hammer, Toolbox, Quote, ChevronRight, ChevronLeft } from "lucide-react";
 import { Link } from "react-router";
 import Ourservices from "../component/Ourservices";
+import feedback from "../config/feedback";
+import { useState } from "react";
 
 function Home() {
+  const [index, setIndex] = useState(0);
   return (
     <div>
       <Navbar />
@@ -106,17 +109,67 @@ function Home() {
         </p>
         <div className="flex justify-center text-center items-center mt-8 flex-wrap">
           <Link
-            to="/services"
+            to="/service"
             className="text-xl m-3 bg-[#2b92f3] hover:opacity-70 px-4 py-2 rounded-lg text-white text-center scale-100 transition-all duration-300"
           >
             Browse Services
           </Link>
           <Link
-            to="/signup"
+            to="/register"
             className="text-xl m-3 px-4 py-2 border border-gray-300 bg-white rounded-lg hover:bg-[#FACD47] hover:text-white scale-100 transition-all duration-300"
           >
             Create Account
           </Link>
+        </div>
+      </div>
+
+      <div>
+        <div className="flex flex-col justify-center items-center my-10">
+          <p className="text-4xl my-4 font-semibold text-center">
+            What Our Customers Say
+          </p>
+          <p className="text-[#554d47] text-center mb-4">
+            Real reviews from satisfied customers
+          </p>
+          <div className="p-20 md:w-200 w-80 shadow-2xl relative mt-10 flex flex-col justify-center items-center flex-wrap rounded-xl">
+            <Quote
+              size={50}
+              className="-top-6 bg-[#2b92f3] text-white p-3 rounded-4xl left-[47%] absolute"
+            />
+            <p className="text-[#554d47] text-sm md:text-lg text-center">
+              "{feedback[index].title}"
+            </p>
+            <img
+              src={feedback[index].img}
+              alt="profile-image"
+              className="h-20 my-5 rounded-[50%] border-2 border-[#2b92f3]"
+            />
+            <p className="font-semibold text-lg">{feedback[index].name}</p>
+            <div className="flex justify-center items-center mt-5">
+              <ChevronLeft
+                size={50}
+                className="m-2 cursor-pointer text-white bg-neutral-600 rounded-3xl hover:text-[#2b92f3] duration-300"
+                onClick={() => {
+                  if (index > 0) {
+                    setIndex(index - 1);
+                  } else {
+                    setIndex(0);
+                  }
+                }}
+              />
+              <ChevronRight
+                size={50}
+                className="m-2 cursor-pointer text-white bg-neutral-600 rounded-3xl hover:text-[#2b92f3] duration-300"
+                onClick={() => {
+                  if (index < feedback.length - 1) {
+                    setIndex(index + 1);
+                  } else {
+                    setIndex(0);
+                  }
+                }}
+              />
+            </div>
+          </div>
         </div>
       </div>
       <Footer />
