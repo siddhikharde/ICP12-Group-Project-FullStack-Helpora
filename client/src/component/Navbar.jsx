@@ -73,7 +73,7 @@ function Navbar() {
               Home
             </Link>
             <Link
-              to="/property"
+              to="/service"
               className="font-bold text-xl py-2 hover:text-[#2b92f3]"
               onClick={() => setIsOpen(false)}
             >
@@ -101,7 +101,7 @@ function Navbar() {
               Login
             </Link>
             <Link
-              to="/signup"
+              to="/register"
               className="font-bold text-xl py-2 hover:text-[#2b92f3]"
               onClick={() => setIsOpen(false)}
             >

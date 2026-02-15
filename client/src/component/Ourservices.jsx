@@ -9,7 +9,7 @@ function Ourservices({icon, title, subtitle}) {
       <p className="text-[#554d47] text-[17px] mt-3">
         {subtitle}
       </p>
-      <Link to="">
+      <Link to="/service">
         <p className="font-bold mt-3">Book Now →</p>
       </Link>
     </div>
