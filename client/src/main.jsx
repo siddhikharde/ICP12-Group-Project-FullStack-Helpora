@@ -8,6 +8,9 @@ import  Login  from './views/Login.jsx'
 import Register from './views/Register.jsx'
 import User from './views/user/User.jsx'
 import Provider from './views/serviceProvider/Provider.jsx'
+import Service from './views/Service.jsx'
+import Contact from './views/Contact.jsx'
+import About from './views/About.jsx'
 
 
 
@@ -20,6 +23,9 @@ root.render(
   <Route path='/register' element={<Register/>}/>
   <Route path='/user' element={<User/>}/>
   <Route path='/service-provider' element={<Provider/>}/>
+  <Route path='/about' element={<About/>}/>
+  <Route path='/service' element={<Service/>}/>
+  <Route path='/contact' element={<Contact/>}/>
 </Routes>
 </BrowserRouter>
 )

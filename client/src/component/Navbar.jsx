@@ -27,7 +27,7 @@ function Navbar() {
             Home
           </Link>
           <Link
-            to="/"
+            to="/service"
             className="text-xl mx-3 hover:text-[#2b92f3] scale-100 transition-all duration-300"
           >
             Services

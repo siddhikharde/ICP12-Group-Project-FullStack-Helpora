@@ -67,7 +67,7 @@ function Footer() {
               Home
             </Link>
             <Link
-              to="/property"
+              to="/service"
               className=" text-xl mx-3 my-2 hover:text-[#2b92f3] scale-100 transition-all duration-300"
             >
               Services
