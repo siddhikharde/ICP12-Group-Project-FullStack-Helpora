@@ -3,16 +3,32 @@ import Navbar from '../component/Navbar'
 import UserImg from '../assets/user.png'
 import Button from '../component/Button';
 import Input from '../component/Input';
+import axios from 'axios';
 
 function Profile() {
     const [isEditing, setIsEditing] = useState(false)
     const user = JSON.parse(localStorage.getItem("user"));
+    const token= localStorage.getItem("token");
     const [userData, setUserData] = useState({
         name: user.fullName,
         email: user.email,
         phone: user.phoneNo
 
     })
+
+    const editUser=async ()=>{
+      const res=await axios.put("http://localhost:8800/user", {
+        id: user._id,
+        fullName: userData.name,
+        email: userData.email,
+        phoneNo: userData.phone,},
+    {
+        headers:{Authorization:`Bearer ${token}`}
+    })  
+     console.log(res.data)
+     localStorage.setItem("user", JSON.stringify(res.data.data));
+    setIsEditing(false);            
+    }
     useEffect(() => {
         console.log(userData)
     }, [])
@@ -86,9 +102,8 @@ function Profile() {
                      </div>
                      {isEditing && (
                         <div className='mt-8 text-righ'>
-                            <Button title="Save Changes" onClick={()=>{
-                                setIsEditing(false)
-                            }}/>
+                            <Button title="Save Changes"
+                               onClick={editUser}/>
                             </div>
                      )}
                 </div>
