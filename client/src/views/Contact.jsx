@@ -3,11 +3,27 @@ import Navbar from "../component/Navbar";
 import {Mail, MapPinHouse, Phone } from "lucide-react";
 import Input from "../component/Input";
 import Button from "../component/Button";
+import toast, { Toaster } from "react-hot-toast";
 function Contact() {
-const [user, setUser]=useState({
-  email:"",
-  password:""
+const [formData, setFormData]=useState({
+   name: "",
+   email: "",
+   message: "",
 })
+const saveData=()=>{
+  const {name, email, message}=formData;
+  if(!name || !email || !message ){
+    toast.error("All fields are required", {id:"submitFailed"});
+    return;
+  }
+
+  toast.success("Message sent successfully!", {id:"savesuccess"});
+setFormData({
+  name: "",
+  email: "",
+  message: ""
+});
+}
 
   return (
     <div className="min-h-screen bg-gray-50 text-textMain px-6 py-16">
@@ -71,32 +87,36 @@ const [user, setUser]=useState({
        <div className='w-full p-3 flex flex-col gap-5  '>
          <div className='flex flex-col gap-2'>
             <label className=' text-[15px] text-gray-700 ' >Name</label>
-            <Input placeholder='Your Name' type='text'  onChange={(e)=>{
-              
+            <Input placeholder='Your Name' type='text' value={formData.name}  onChange={(e)=>{
+               setFormData({
+                ...formData, name:e.target.value
+              })
             }} />
           </div>
           <div className='flex flex-col gap-2'>
             <label className=' text-[15px] text-gray-700 ' >Email</label>
-            <Input placeholder='you@example.com' type='email'  onChange={(e)=>{
-              
+            <Input placeholder='you@example.com' type='email' value={formData.email} onChange={(e)=>{
+              setFormData({
+                ...formData, email:e.target.value
+              })
             }} />
           </div>
 
-          <div className='flex flex-col gap-2'>
-            <label className=' text-[15px] text-gray-700 ' >Subject</label>
-            <Input placeholder='How can we help you ?' type='email'  onChange={(e)=>{
-              
-            }} />
-          </div>
            <div className='flex flex-col gap-2 mb-3'>
             <label className=' text-[15px] text-gray-700 ' >Message</label>
             <textarea
             placeholder="Your Message" rows="4" required  
-           className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+            value={formData.message}
+           className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+           onChange={(e)=>{
+             setFormData({
+                ...formData, message:e.target.value
+              })
+           }}/>
           </div>
-          <Button title={" Send Message"} />
+          <Button title={" Send Message"} variant="primary" size="lg"  onClick={saveData}/>
        </div>
-          
+          <Toaster/>
        </div>
        </div>
 
