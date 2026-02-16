@@ -8,6 +8,7 @@ import Navbar from '../component/Navbar'
 import RegisterBg from "../assets/register-bg.jpg"
 import { useNavigate } from 'react-router'
 import { Eye, EyeClosed } from 'lucide-react'
+import Footer from '../component/Footer'
 
 function Login() {
   const navigate=useNavigate();
@@ -46,10 +47,9 @@ const checkUser=async ()=>{
   return (
     <>
    <Navbar/>
-    <div className='min-h-screen bg-cover bg-center relative px-4 flex justify-center pt-20'
-     style={{ backgroundImage: `url(${RegisterBg})` }}>
-       <div className="absolute inset-0 bg-black opacity-[60%]"></div>
-      <div className='relative  flex justify-center h-auto flex-col m-auto items-center mx-auto  w-[90%] md:w-[450px] p-5 bg-white opacity-[95%] shadow-lg rounded-lg gap-5 '>
+    <div className='min-h-screen bg-cover bg-center relative px-4 flex justify-center  bg-gray-50 pt-20'
+     >
+      <div className=' flex justify-center flex-col m-auto items-center mx-auto  w-[90%] md:w-[450px]  bg-white px-5 py-8 h-auto rounded-2xl  shadow-lg rounded-lg gap-5 '>
        <div className='flex flex-col items-center justify-center gap-3'>
          <h1 className='text-3xl text-center font-bold text-[#2b92f3]'>Welcome to Helpora</h1>
         <p className='text-lg text-center text-[#554d47]'>Find and book trusted local service providers</p>
@@ -90,6 +90,7 @@ const checkUser=async ()=>{
     </div>
     <Toaster/>
     </div>
+    <Footer/>
      </>
   )
 }

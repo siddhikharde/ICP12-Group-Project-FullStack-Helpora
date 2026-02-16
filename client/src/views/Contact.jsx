@@ -29,7 +29,7 @@ setFormData({
   return (
     <>
      <Navbar/>
-    <div className="min-h-screen bg-gray-50 text-textMain px-6 py-16">
+    <div className="min-h-screen bg-gray-50 px-6 py-16">
      
       <div className="text-center mb-12 mt-7">
         <h1 className="text-4xl font-bold text-[#2b92f3] mb-3">
