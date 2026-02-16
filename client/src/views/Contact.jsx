@@ -4,6 +4,7 @@ import {Mail, MapPinHouse, Phone } from "lucide-react";
 import Input from "../component/Input";
 import Button from "../component/Button";
 import toast, { Toaster } from "react-hot-toast";
+import Footer from "../component/Footer"
 function Contact() {
 const [formData, setFormData]=useState({
    name: "",
@@ -26,8 +27,10 @@ setFormData({
 }
 
   return (
+    <>
+     <Navbar/>
     <div className="min-h-screen bg-gray-50 text-textMain px-6 py-16">
-      <Navbar/>
+     
       <div className="text-center mb-12 mt-7">
         <h1 className="text-4xl font-bold text-[#2b92f3] mb-3">
           Contact Us
@@ -119,11 +122,9 @@ setFormData({
           <Toaster/>
        </div>
        </div>
-
-       
-
       </div>
-    
+      <Footer/>
+    </>
  
   );
 }
