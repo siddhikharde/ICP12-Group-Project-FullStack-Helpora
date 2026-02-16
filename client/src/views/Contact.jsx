@@ -32,7 +32,7 @@ setFormData({
     <div className="min-h-screen bg-gray-50 px-6 py-16">
      
       <div className="text-center mb-12 mt-7">
-        <h1 className="text-4xl font-bold text-[#2b92f3] mb-3">
+        <h1 className="text-6xl font-bold text-[#2b92f3] mb-3">
           Contact Us
         </h1>
         <p className="text-[#554d47] text-lg">
@@ -41,7 +41,7 @@ setFormData({
       </div>
 
       <div className="max-w-full  md:px-10 mx-auto flex  flex-col md:flex-row  gap-10">
-        <div className=" p-8 h-auto rounded-2xl md:w-1/2 w-full">
+        <div className=" md:p-8 h-auto rounded-2xl md:w-1/2 w-full">
           <h2 className="text-2xl font-semibold text-[#2b92f3] mb-6">
             Get In Touch
           </h2>
