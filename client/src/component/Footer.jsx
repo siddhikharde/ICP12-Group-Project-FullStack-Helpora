@@ -14,8 +14,8 @@ import { Link } from "react-router";
 function Footer() {
   return (
     <div className="border-t border-gray-300 bg-[#eef0f4]">
-      <div className="flex justify-start md:justify-around bg-[#eef0f4] p-8 md:p-16 flex-wrap">
-        <div className="m-5">
+      <div className="flex items-start justify-start md:justify-around bg-[#eef0f4] p-8 md:p-16 flex-wrap">
+        <div className="my-9">
           <div className="flex items-center">
             <HandHelping
               size={45}
@@ -84,12 +84,6 @@ function Footer() {
             >
               Contact
             </Link>
-            <Link
-              to="/login"
-              className="text-xl mx-3 my-2 hover:text-[#2b92f3] scale-100 transition-all duration-300"
-            >
-              Login
-            </Link>
           </div>
         </div>
 
@@ -98,7 +92,7 @@ function Footer() {
           <div className="flex flex-col justify-evenly h-50">
             <div className="flex justify-evenly items-start">
               <MapPin size={20} className="text-[#2b92f3] mr-4" />
-              <p className="text-start text-sm  w-60">
+              <p className="text-start text-sm w-60">
                 123 Services Avenue, Suite 100, Los Angeles, CA 90001
               </p>
             </div>
