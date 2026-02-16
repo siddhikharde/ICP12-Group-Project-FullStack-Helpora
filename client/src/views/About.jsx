@@ -9,7 +9,7 @@ function About() {
     <div>
       <Navbar />
       <div className="my-25 mx-5 flex flex-col items-center justify-center flex-wrap">
-        <p className="text-5xl text-center md:text-7xl font-bold text-[#2a2e32] mt-1">
+        <p className="text-5xl text-center md:text-7xl font-bold text-[#2b92f3] mt-1">
           About Helpora
         </p>
         <p className="text-lg text-center md:text-xl text-[#554d47] mt-3">
