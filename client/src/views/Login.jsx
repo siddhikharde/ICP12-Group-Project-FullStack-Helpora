@@ -37,7 +37,7 @@ const checkUser=async ()=>{
     },1000)
 
    }else{
-    toast.error("Invalid credentials", {id:"loginFailed"});
+    toast.error("Invalid Email or password", {id:"loginFailed"});
    }
  }catch(e){
   toast.error("Login failed. Please try again.", {id:"loginFailed"});

@@ -11,6 +11,7 @@ import Provider from './views/serviceProvider/Provider.jsx'
 import Service from './views/Service.jsx'
 import Contact from './views/Contact.jsx'
 import About from './views/About.jsx'
+import Profile from './views/Profile.jsx'
 
 
 
