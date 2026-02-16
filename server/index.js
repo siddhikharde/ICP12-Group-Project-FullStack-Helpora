@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import User from './models/user.js';
-import jwt from 'jsonwebtoken';
+import jwt from './middleware/jwt.js';
 import { postLogin, postRegister } from './controllers/aouth.js';
 dotenv.config();
 
@@ -31,7 +31,7 @@ app.get('/health',(req,res)=>{
 
 app.post('/register', postRegister);
 app.post('/login',postLogin);
- app.put('/user', async (req, res)=>{
+ app.put('/user', jwt,  async (req, res)=>{
   const {id, fullName, email, phoneNo}=req.body;
        const user=await User.findByIdAndUpdate(id,{
         fullName,
