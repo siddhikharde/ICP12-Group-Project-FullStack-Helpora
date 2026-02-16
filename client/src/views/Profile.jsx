@@ -1,8 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../component/Navbar'
 import UserImg from '../assets/user.png'
+import Button from '../component/Button';
 
 function Profile() {
+    const [isEditing, setIsEditing]=useState(false)
+      const user=JSON.parse(localStorage.getItem("user"));
+      const [userData, setUserData]=useState({
+        name:user.fullName,
+        email:user.email,
+        phoneNo:user.phoneNo
+
+      })
+ useEffect(()=>{
+ console.log(userData)
+ },[])
   return (
     <div className='min-h-screen bg-gray-50 text-[#2a2e32]'>
         <Navbar/>
@@ -17,6 +29,24 @@ function Profile() {
               />
             </div>
 
+            <div className='flex-col text-center md:text-left'>
+                <h2 className="text-3xl font-bold text-[#2b92f3]"> 
+                    {userData.name}
+                </h2>
+                <p className="text-[#554d47] mt-2">
+                Manage your personal information
+              </p>
+            </div>
+            <div>
+             {
+                !isEditing && (
+                    <Button title="Edit Profile" variant="primary"
+                    onClick={()=>{
+                        setIsEditing(true)
+                    }}/>
+                )
+               }
+            </div>
                </div>
             </div>
 
