@@ -31,7 +31,34 @@ app.get('/health',(req,res)=>{
 
 app.post('/register', postRegister);
 app.post('/login',postLogin);
+ app.put('/user', async (req, res)=>{
+  const {id, fullName, email, phoneNo}=req.body;
+       const user=await User.findByIdAndUpdate(id,{
+        fullName,
+        email,
+         phoneNo
+       })
 
+       const userData=await User.findById(id);
+       userData.password=undefined;
+   try{
+     if(user){
+      return res.json({
+        success:true,
+        message:"User Information Updated Successfully.",
+        data:userData
+      })
+   }
+    }catch(e){
+      return res.json({
+        success:false,
+        message:"Faild to update..",
+        error:e.message
+        
+      })
+    }
+
+ })
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   connectDB();
