@@ -22,23 +22,46 @@ const [user, setUser]=useState({
       </div>
 
       <div className="max-w-full  md:px-10 mx-auto flex  flex-col md:flex-row  gap-10">
-        <div className="bg-white p-8 h-auto rounded-2xl md:w-1/2 w-full shadow-lg">
+        <div className=" p-8 h-auto rounded-2xl md:w-1/2 w-full">
           <h2 className="text-2xl font-semibold text-[#2b92f3] mb-6">
             Get In Touch
           </h2>
 
           <div className="space-y-5 ">
-            <p className=" flex items-center gap-2 cursor-pointer">
-              <span className="font-semibold flex items-center gap-1 "><MapPinHouse size={17} strokeWidth={2.5} className="text-red-800" /> Address:</span> Loni Pravara, India
-            </p>
+           <div className="flex items-center gap-5 bg-white p-8 h-auto rounded-2xl  shadow-lg">
+           <p className=" flex items-center w-12 h-12 justify-center p-3 rounded-md cursor-pointer bg-[#d4ebff]">
+             <MapPinHouse size={18} strokeWidth={2.5} className="text-[#2b92f3]" />
+           </p>
+             <div className=" flex flex-col gap-0.5 items-start  cursor-pointer">
+              
+              <span className="font-semibold flex items-center gap-1 "> Address:</span>
+               <p className="text-sm">Loni Pravara, India</p>
+               <p className="text-[12px] text-[#554d47]">Loni, 413 736 </p>
+            </div>
+           </div>
+             <div className="flex items-center gap-5 bg-white p-8 h-auto rounded-2xl  shadow-lg">
+               <a href="tel:+919876543210" className="flex gap-5 items-center justify-center">
+                 <p className=" flex items-center w-12 h-12 justify-center p-3 rounded-md cursor-pointer bg-[#d4ebff]">
+                  <Phone size={18} strokeWidth={2.5} className="text-[#2b92f3]"  /> </p>
+                  <div className=" flex flex-col gap-0.5 items-start  cursor-pointer">
+                      <span className="font-semibold flex items-center gap-1 ">Phone:</span> 
+                      <p className="text-sm">  +91 98765 43210</p>
+                      <p className="text-[12px] text-[#554d47]"> Mon-Fri,  9am-6pm</p>
+                  </div>
+               </a>
+             </div>
 
-            <p className=" flex items-center gap-2 cursor-pointer">
-              <a href="tel:+919876543210" className="flex gap-2"><span className="font-semibold flex items-center gap-1 "><Phone size={17} strokeWidth={2.5} className="text-red-800" /> Phone:</span> +91 98765 43210</a>
-            </p>
-
-            <p className=" flex items-center gap-2 cursor-pointer">
-            <a href="mailto:support@helpora.com" className="flex gap-2">   <span className="font-semibold flex items-center gap-1 "><Mail size={17} strokeWidth={2.5} className="text-red-800" />Email:</span> support@helpora.com</a>
-            </p>
+             <div className="flex items-center gap-5 bg-white p-8 h-auto rounded-2xl  shadow-lg">
+               <a href="mailto:support@helpora.com" className="flex gap-5 items-center justify-center">
+                 <p className=" flex items-center w-12 h-12 justify-center p-3 rounded-md cursor-pointer bg-[#d4ebff]">
+                  <Mail size={18} strokeWidth={2.5} className="text-[#2b92f3]" /> </p>
+                  <div className=" flex flex-col gap-0.5 items-start  cursor-pointer">
+                      <span className="font-semibold flex items-center gap-1 ">Email:</span> 
+                      <p className="text-sm"> support@helpora.com</p>
+                      <p className="text-[12px] text-[#554d47]">We reply within 24 hours</p>
+                  </div>
+               </a>
+             </div>
           </div>
         </div>
 
@@ -68,7 +91,8 @@ const [user, setUser]=useState({
            <div className='flex flex-col gap-2 mb-3'>
             <label className=' text-[15px] text-gray-700 ' >Message</label>
             <textarea
-            placeholder="Your Message" rows="4" required      className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+            placeholder="Your Message" rows="4" required  
+           className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
           </div>
           <Button title={" Send Message"} />
        </div>
