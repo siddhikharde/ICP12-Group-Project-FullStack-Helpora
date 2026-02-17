@@ -31,8 +31,8 @@ setFormData({
      <Navbar/>
     <div className="min-h-screen bg-gray-50 px-6 py-16">
      
-      <div className="text-center mb-12 mt-7">
-        <h1 className="text-6xl font-bold text-[#2b92f3] mb-3">
+      <div className="text-center mb-12 mt-10">
+        <h1 className="text-5xl md:text-7xl font-bold text-[#2b92f3] mb-3">
           Contact Us
         </h1>
         <p className="text-[#554d47] text-lg">
