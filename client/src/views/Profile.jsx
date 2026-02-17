@@ -1,15 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Navbar from '../component/Navbar'
 import UserImg from '../assets/user.png'
 import Button from '../component/Button';
 import Input from '../component/Input';
 import axios from 'axios';
 import { Plus } from 'lucide-react';
+import {
+    ImageKitAbortError,
+    ImageKitInvalidRequestError,
+    ImageKitServerError,
+    ImageKitUploadNetworkError,
+    upload,
+} from "@imagekit/react";
 
 function Profile() {
     const [isEditing, setIsEditing] = useState(false)
-    const user = JSON.parse(localStorage.getItem("user"));
-    const token= localStorage.getItem("token");
+const [user, setUser] = useState(
+  JSON.parse(localStorage.getItem("user"))
+);
+    const token = localStorage.getItem("token");
+    const [profileImage, setProfileImage] = useState(user.profileImage || UserImg);
     const [userData, setUserData] = useState({
         name: user.fullName,
         email: user.email,
@@ -17,22 +27,86 @@ function Profile() {
 
     })
 
-    const editUser=async ()=>{
-      const res=await axios.put("http://localhost:8800/user", {
-        id: user._id,
-        fullName: userData.name,
-        email: userData.email,
-        phoneNo: userData.phone,},
-    {
-        headers:{Authorization:`Bearer ${token}`}
-    })  
-     console.log(res.data)
-     localStorage.setItem("user", JSON.stringify(res.data.data));
-    setIsEditing(false);            
+    const editUser = async () => {
+        const res = await axios.put("http://localhost:8800/user", {
+            id: user._id,
+            fullName: userData.name,
+            email: userData.email,
+            phoneNo: userData.phone,
+        },
+            {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+        console.log(res.data)
+        localStorage.setItem("user", JSON.stringify(res.data.data));
+        setIsEditing(false);
     }
     useEffect(() => {
         console.log(userData)
     }, [])
+
+    const [progress, setProgress] = useState(0);
+ const fileInputRef = useRef();
+  const authenticator = async () => {
+        try {
+            const response = await fetch(`http://localhost:8800/auth`);
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Request failed with status ${response.status}: ${errorText}`);
+            }
+            const data = await response.json();
+            const { signature, expire, token, publicKey } = data;
+            return { signature, expire, token, publicKey };
+        } catch (error) {
+            console.error("Authentication error:", error);
+            throw new Error("Authentication request failed");
+        }
+    };
+     const handleUpload = async () => {
+                const fileInput = fileInputRef.current;
+                if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+                    alert("Please select a file to upload");
+                    return;
+                }
+    
+                const file = fileInput.files[0];
+                let authParams;
+                try {
+                    authParams = await authenticator();
+                } catch (authError) {
+                    console.error("Failed to authenticate for upload:", authError);
+                    return;
+                }
+                const { signature, expire, token, publicKey } = authParams;
+                try {
+                    const uploadResponse = await upload({
+                        expire,
+                        token,
+                        signature,
+                        publicKey,
+                        file,
+                        fileName: file.name,
+                        onProgress: (event) => {
+                            setProgress((event.loaded / event.total) * 100);
+                        },
+                    });
+                    console.log("Upload response:", uploadResponse);
+                    setProfileImage(uploadResponse.url);
+                    fileInputRef.current.value = "";
+                } catch (error) {
+                    if (error instanceof ImageKitAbortError) {
+                        console.error("Upload aborted:", error.reason);
+                    } else if (error instanceof ImageKitInvalidRequestError) {
+                        console.error("Invalid request:", error.message);
+                    } else if (error instanceof ImageKitUploadNetworkError) {
+                        console.error("Network error:", error.message);
+                    } else if (error instanceof ImageKitServerError) {
+                        console.error("Server error:", error.message);
+                    } else {
+                        console.error("Upload error:", error);
+                    }
+                }
+            };
     return (
         <div className='min-h-screen bg-gray-50 text-[#2a2e32]'>
             <Navbar />
@@ -40,14 +114,25 @@ function Profile() {
                 <div className='bg-white rounded-2xl shadow-xl p-10 mt-20'>
                     <div className='flex flex-col md:flex-row items-center gap-8'>
                         <div className="relative">
-                           <div className='absolute bottom-2 p-0.5 border  border-[#2b92f3] right-3 bg-white rounded-full cursor-pointer' >
-                             <Plus size={20} />  
-                           </div>
-                            <img
-                                src={`${UserImg}`}
-                                alt="Profile"
-                                className="w-36 h-36 rounded-full object-cover border-4 border-[#2b92f3]"
+
+
+                            <button
+                                onClick={() => fileInputRef.current.click()}
+                                className="absolute bottom-2 cursor-pointer z-1000 right-2 bg-white border border-[#2b92f3] rounded-full p-1"
+                            >
+                                <Plus size={18} /> </button>
+                            <input
+                                type="file"
+                                ref={fileInputRef}
+                                className="hidden"
+                                onChange={handleUpload}
                             />
+                            <div className=" w-40 h-40 rounded-full object-cover border-4 border-[#2b92f3] overflow-hidden shadow-lg cursor-pointer transition-all hover:scale-[1.03]">
+                            <img
+                                src={profileImage}
+                                alt="Profile"
+                                className=" rounded-full object-cover "
+                            /></div>
                         </div>
 
                         <div className='flex-col text-center md:text-left'>
@@ -69,47 +154,47 @@ function Profile() {
                             }
                         </div>
                     </div>
-                    
-                     <div className="border-t my-8"></div>
-                     <div className="grid md:grid-cols-2 gap-6">
+
+                    <div className="border-t my-8"></div>
+                    <div className="grid md:grid-cols-2 gap-6">
                         <div className="flex flex-col gap-2">
-                             <label className="font-semibold">Full Name</label>
-                             <Input value={userData.name}
-                             onChange={(e)=>{
-                                setUserData({
-                                    ...userData, name:e.target.value
-                                })
-                             }}
-                disabled={!isEditing}/>
+                            <label className="font-semibold">Full Name</label>
+                            <Input value={userData.name}
+                                onChange={(e) => {
+                                    setUserData({
+                                        ...userData, name: e.target.value
+                                    })
+                                }}
+                                disabled={!isEditing} />
                         </div>
 
-                         <div className="flex flex-col gap-2">
-                             <label className="font-semibold">Email</label>
-                             <Input value={userData.email}  onChange={(e)=>{
+                        <div className="flex flex-col gap-2">
+                            <label className="font-semibold">Email</label>
+                            <Input value={userData.email} onChange={(e) => {
                                 setUserData({
-                                    ...userData, email:e.target.value
+                                    ...userData, email: e.target.value
                                 })
-                             }}
-                disabled={!isEditing}/>
+                            }}
+                                disabled={!isEditing} />
                         </div>
 
-                         <div className="flex flex-col gap-2">
-                             <label className="font-semibold">Phone Number</label>
-                             <Input value={userData.phone}  onChange={(e)=>{
+                        <div className="flex flex-col gap-2">
+                            <label className="font-semibold">Phone Number</label>
+                            <Input value={userData.phone} onChange={(e) => {
                                 setUserData({
-                                    ...userData, phone:e.target.value
+                                    ...userData, phone: e.target.value
                                 })
-                             }}
-                disabled={!isEditing}/>
+                            }}
+                                disabled={!isEditing} />
                         </div>
 
-                     </div>
-                     {isEditing && (
+                    </div>
+                    {isEditing && (
                         <div className='mt-8 text-righ'>
                             <Button title="Save Changes"
-                               onClick={editUser}/>
-                            </div>
-                     )}
+                                onClick={editUser} />
+                        </div>
+                    )}
                 </div>
 
             </div>
