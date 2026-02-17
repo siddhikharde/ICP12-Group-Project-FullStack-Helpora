@@ -59,6 +59,27 @@ app.post('/login',postLogin);
     }
 
  })
+
+ app.put("/profile-image", jwt , async (req, res)=>{
+  try{
+    const {id, profileImage}= req.body;
+    const updatedUser= await User.findByIdAndUpdate(
+      id,
+      {profileImage},
+      {new:true}
+    );
+     res.json({
+      success:true,
+      message:"Profile image updated",
+      data:updatedUser
+     })
+  }catch(e){
+    res.json({
+      success:false,
+      message: "Server error",
+    })
+  }
+ });
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   connectDB();
