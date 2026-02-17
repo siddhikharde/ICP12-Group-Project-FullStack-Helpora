@@ -4,7 +4,7 @@ import UserImg from '../assets/user.png'
 import Button from '../component/Button';
 import Input from '../component/Input';
 import axios from 'axios';
-import { Plus } from 'lucide-react';
+import { Cross, Plus, X } from 'lucide-react';
 import {
     ImageKitAbortError,
     ImageKitInvalidRequestError,
@@ -14,6 +14,7 @@ import {
 } from "@imagekit/react";
 
 function Profile() {
+    const [imagePreview, setImagePreview]=useState(false)
     const [isEditing, setIsEditing] = useState(false)
     const [user, setUser] = useState(
         JSON.parse(localStorage.getItem("user"))
@@ -130,12 +131,9 @@ function Profile() {
                 <div className='bg-white rounded-2xl shadow-xl p-10 mt-20'>
                     <div className='flex flex-col md:flex-row items-center gap-8'>
                         <div className="relative">
-
-
                             <button
                                 onClick={() => fileInputRef.current.click()}
-                                className="absolute bottom-2 cursor-pointer z-1000 right-2 bg-white border border-[#2b92f3] rounded-full p-1"
-                            >
+                                className="absolute bottom-2 cursor-pointer right-2 bg-white border border-[#2b92f3] rounded-full p-1">
                                 <Plus size={18} /> </button>
                             <input
                                 type="file"
@@ -143,7 +141,10 @@ function Profile() {
                                 className="hidden"
                                 onChange={handleUpload}
                             />
-                            <div className="w-40 h-40 rounded-full border-4 cursor-pointer border-[#2b92f3] overflow-hidden shadow-lg">
+                            <div className="w-40 h-40 rounded-full border-4 cursor-pointer border-[#2b92f3] overflow-hidden shadow-lg"
+                            onClick={()=>{
+                                setImagePreview(true)
+                            }}>
                                 <img
                                     src={profileImage}
                                     alt="Profile"
@@ -212,9 +213,28 @@ function Profile() {
                         </div>
                     )}
                 </div>
-
+                 
             </div>
+           {imagePreview && (
+  <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-500">
+    
+    <button
+      onClick={() => setImagePreview(false)}
+      className="absolute top-6 right-6 text-white cursor-pointer"
+    >
+      <X size={30} />
+    </button>
 
+    <div className="w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-white">
+      <img
+        src={profileImage}
+        alt="Profile Preview"
+        className="w-full h-full object-cover"
+      />
+    </div>
+
+  </div>
+)}
         </div>
     )
 }
