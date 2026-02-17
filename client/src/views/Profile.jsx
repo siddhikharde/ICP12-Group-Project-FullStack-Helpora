@@ -12,9 +12,10 @@ import {
     ImageKitUploadNetworkError,
     upload,
 } from "@imagekit/react";
+import Footer from '../component/Footer';
 
 function Profile() {
-    const [imagePreview, setImagePreview]=useState(false)
+    const [imagePreview, setImagePreview] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
     const [user, setUser] = useState(
         JSON.parse(localStorage.getItem("user"))
@@ -22,7 +23,7 @@ function Profile() {
     const jwtToken = localStorage.getItem("token");
     const [profileImage, setProfileImage] = useState(user?.profileImage || UserImg);
     const [userData, setUserData] = useState({
-        id:user._id,
+        id: user._id,
         name: user.fullName,
         email: user.email,
         phone: user.phoneNo
@@ -96,8 +97,10 @@ function Profile() {
             setProfileImage(uploadResponse.url);
 
             const res = await axios.put("http://localhost:8800/profile-image",
-                { id:user._id,
-                    profileImage: uploadResponse.url },
+                {
+                    id: user._id,
+                    profileImage: uploadResponse.url
+                },
                 {
                     headers: { Authorization: `Bearer ${jwtToken}` }
                 }
@@ -125,6 +128,7 @@ function Profile() {
         }
     };
     return (
+        <>
         <div className='min-h-screen bg-gray-50 text-[#2a2e32]'>
             <Navbar />
             <div className=' max-w-full mx-auto mt-16 px-6'>
@@ -142,9 +146,9 @@ function Profile() {
                                 onChange={handleUpload}
                             />
                             <div className="w-40 h-40 rounded-full border-4 cursor-pointer border-[#2b92f3] overflow-hidden shadow-lg"
-                            onClick={()=>{
-                                setImagePreview(true)
-                            }}>
+                                onClick={() => {
+                                    setImagePreview(true)
+                                }}>
                                 <img
                                     src={profileImage}
                                     alt="Profile"
@@ -213,29 +217,32 @@ function Profile() {
                         </div>
                     )}
                 </div>
-                 
+
             </div>
-           {imagePreview && (
-  <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-500">
-    
-    <button
-      onClick={() => setImagePreview(false)}
-      className="absolute top-6 right-6 text-white cursor-pointer"
-    >
-      <X size={30} />
-    </button>
+            {imagePreview && (
+                <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-500">
 
-    <div className="w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-white">
-      <img
-        src={profileImage}
-        alt="Profile Preview"
-        className="w-full h-full object-cover"
-      />
-    </div>
+                    <button
+                        onClick={() => setImagePreview(false)}
+                        className="absolute top-6 right-6 text-white cursor-pointer"
+                    >
+                        <X size={30} />
+                    </button>
 
-  </div>
-)}
+                    <div className="w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-white">
+                        <img
+                            src={profileImage}
+                            alt="Profile Preview"
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+
+                </div>
+            )}
+         
         </div>
+           <Footer/>
+        </>
     )
 }
 
