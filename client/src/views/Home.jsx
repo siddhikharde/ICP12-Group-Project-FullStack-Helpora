@@ -114,12 +114,6 @@ function Home() {
           >
             Browse Services
           </Link>
-          <Link
-            to="/register"
-            className="text-xl m-3 px-4 py-2 border border-gray-300 bg-white rounded-lg hover:bg-[#FACD47] hover:text-white scale-100 transition-all duration-300"
-          >
-            Create Account
-          </Link>
         </div>
       </div>
 
