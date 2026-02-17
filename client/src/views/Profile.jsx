@@ -4,6 +4,7 @@ import UserImg from '../assets/user.png'
 import Button from '../component/Button';
 import Input from '../component/Input';
 import axios from 'axios';
+import { Plus } from 'lucide-react';
 
 function Profile() {
     const [isEditing, setIsEditing] = useState(false)
@@ -39,6 +40,9 @@ function Profile() {
                 <div className='bg-white rounded-2xl shadow-xl p-10 mt-20'>
                     <div className='flex flex-col md:flex-row items-center gap-8'>
                         <div className="relative">
+                           <div className='absolute bottom-2 p-0.5 border  border-[#2b92f3] right-3 bg-white rounded-full cursor-pointer' >
+                             <Plus size={20} />  
+                           </div>
                             <img
                                 src={`${UserImg}`}
                                 alt="Profile"
