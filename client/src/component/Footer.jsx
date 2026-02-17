@@ -93,17 +93,17 @@ function Footer() {
             <div className="flex justify-evenly items-start">
               <MapPin size={20} className="text-[#2b92f3] mr-4" />
               <p className="text-start text-sm w-60">
-                123 Services Avenue, Suite 100, Los Angeles, CA 90001
+                Loni Pravara, 413-736, Maharastra,India
               </p>
             </div>
             <div className="flex justify-evenly items-start">
               <Phone size={20} className="text-[#2b92f3] mr-4" />
-              <a href="tel:+918262019461" className="text-start text-sm  w-60 cursor-pointer hover:text-[#2b92f3] duration-300">+91 8262019461</a>
+              <a href="tel:+919876543210" className="text-start text-sm  w-60 cursor-pointer hover:text-[#2b92f3] duration-300">+91 9876543210</a>
             </div>
 
             <div className="flex justify-evenly items-start">
               <Mail size={20} className="text-[#2b92f3] mr-4 " />
-              <a href="mailto:info@servicehub.com" className="text-start text-sm  w-60 cursor-pointer hover:text-[#2b92f3] duration-300">info@servicehub.com</a>
+              <a href="mailto:support@helpora.com" className="text-start text-sm  w-60 cursor-pointer hover:text-[#2b92f3] duration-300">support@helpora.com</a>
             </div>
           </div>
         </div>
