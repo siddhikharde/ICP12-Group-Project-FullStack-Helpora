@@ -15,12 +15,13 @@ import {
 
 function Profile() {
     const [isEditing, setIsEditing] = useState(false)
-const [user, setUser] = useState(
-  JSON.parse(localStorage.getItem("user"))
-);
-    const token = localStorage.getItem("token");
-    const [profileImage, setProfileImage] = useState(user.profileImage || UserImg);
+    const [user, setUser] = useState(
+        JSON.parse(localStorage.getItem("user"))
+    );
+    const jwtToken = localStorage.getItem("token");
+    const [profileImage, setProfileImage] = useState(user?.profileImage || UserImg);
     const [userData, setUserData] = useState({
+        id:user._id,
         name: user.fullName,
         email: user.email,
         phone: user.phoneNo
@@ -35,7 +36,7 @@ const [user, setUser] = useState(
             phoneNo: userData.phone,
         },
             {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: { Authorization: `Bearer ${jwtToken}` }
             })
         console.log(res.data)
         localStorage.setItem("user", JSON.stringify(res.data.data));
@@ -46,8 +47,8 @@ const [user, setUser] = useState(
     }, [])
 
     const [progress, setProgress] = useState(0);
- const fileInputRef = useRef();
-  const authenticator = async () => {
+    const fileInputRef = useRef();
+    const authenticator = async () => {
         try {
             const response = await fetch(`http://localhost:8800/auth`);
             if (!response.ok) {
@@ -62,51 +63,66 @@ const [user, setUser] = useState(
             throw new Error("Authentication request failed");
         }
     };
-     const handleUpload = async () => {
-                const fileInput = fileInputRef.current;
-                if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-                    alert("Please select a file to upload");
-                    return;
+    const handleUpload = async () => {
+        const fileInput = fileInputRef.current;
+        if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+            alert("Please select a file to upload");
+            return;
+        }
+
+        const file = fileInput.files[0];
+        let authParams;
+        try {
+            authParams = await authenticator();
+        } catch (authError) {
+            console.error("Failed to authenticate for upload:", authError);
+            return;
+        }
+        const { signature, expire, token, publicKey } = authParams;
+        try {
+            const uploadResponse = await upload({
+                expire,
+                token,
+                signature,
+                publicKey,
+                file,
+                fileName: file.name,
+                onProgress: (event) => {
+                    setProgress((event.loaded / event.total) * 100);
+                },
+            });
+            console.log("Upload response:", uploadResponse);
+            setProfileImage(uploadResponse.url);
+
+            const res = await axios.put("http://localhost:8800/profile-image",
+                { id:user._id,
+                    profileImage: uploadResponse.url },
+                {
+                    headers: { Authorization: `Bearer ${jwtToken}` }
                 }
-    
-                const file = fileInput.files[0];
-                let authParams;
-                try {
-                    authParams = await authenticator();
-                } catch (authError) {
-                    console.error("Failed to authenticate for upload:", authError);
-                    return;
-                }
-                const { signature, expire, token, publicKey } = authParams;
-                try {
-                    const uploadResponse = await upload({
-                        expire,
-                        token,
-                        signature,
-                        publicKey,
-                        file,
-                        fileName: file.name,
-                        onProgress: (event) => {
-                            setProgress((event.loaded / event.total) * 100);
-                        },
-                    });
-                    console.log("Upload response:", uploadResponse);
-                    setProfileImage(uploadResponse.url);
-                    fileInputRef.current.value = "";
-                } catch (error) {
-                    if (error instanceof ImageKitAbortError) {
-                        console.error("Upload aborted:", error.reason);
-                    } else if (error instanceof ImageKitInvalidRequestError) {
-                        console.error("Invalid request:", error.message);
-                    } else if (error instanceof ImageKitUploadNetworkError) {
-                        console.error("Network error:", error.message);
-                    } else if (error instanceof ImageKitServerError) {
-                        console.error("Server error:", error.message);
-                    } else {
-                        console.error("Upload error:", error);
-                    }
-                }
+            );
+            const updatedUser = {
+                ...user,
+                profileImage: uploadResponse.url,
             };
+            setUser(updatedUser);
+            localStorage.setItem("user", JSON.stringify(updatedUser));
+
+            fileInputRef.current.value = "";
+        } catch (error) {
+            if (error instanceof ImageKitAbortError) {
+                console.error("Upload aborted:", error.reason);
+            } else if (error instanceof ImageKitInvalidRequestError) {
+                console.error("Invalid request:", error.message);
+            } else if (error instanceof ImageKitUploadNetworkError) {
+                console.error("Network error:", error.message);
+            } else if (error instanceof ImageKitServerError) {
+                console.error("Server error:", error.message);
+            } else {
+                console.error("Upload error:", error);
+            }
+        }
+    };
     return (
         <div className='min-h-screen bg-gray-50 text-[#2a2e32]'>
             <Navbar />
@@ -127,12 +143,12 @@ const [user, setUser] = useState(
                                 className="hidden"
                                 onChange={handleUpload}
                             />
-                            <div className=" w-40 h-40 rounded-full object-cover border-4 border-[#2b92f3] overflow-hidden shadow-lg cursor-pointer transition-all hover:scale-[1.03]">
-                            <img
-                                src={profileImage}
-                                alt="Profile"
-                                className=" rounded-full object-cover "
-                            /></div>
+                            <div className="w-40 h-40 rounded-full border-4 cursor-pointer border-[#2b92f3] overflow-hidden shadow-lg">
+                                <img
+                                    src={profileImage}
+                                    alt="Profile"
+                                    className="w-full h-full object-cover "
+                                /></div>
                         </div>
 
                         <div className='flex-col text-center md:text-left'>
