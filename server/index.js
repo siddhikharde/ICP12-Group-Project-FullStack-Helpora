@@ -2,9 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv'; 
 import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
 import User from './models/user.js';
 import jwt from './middleware/jwt.js';
+import ImageKit from '@imagekit/nodejs'
 import { postLogin, postRegister } from './controllers/aouth.js';
 dotenv.config();
 
@@ -19,7 +19,14 @@ const connectDB =async ()=>{
    console.log("Connected to MongoDB");
 }
 
+const client = new ImageKit({
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY
+});
 
+app.get('/auth', function (req, res) {
+  const { token, expire, signature } = client.helper.getAuthenticationParameters();
+  res.send({ token, expire, signature, publicKey: process.env.IMAGEKIT_PUBLIC_KEY });
+});
 
 app.get('/', (req, res) => {
   res.send('Welcome to the HELPORA...');
