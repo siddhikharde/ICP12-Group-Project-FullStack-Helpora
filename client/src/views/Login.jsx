@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { toast, Toaster } from 'react-hot-toast'
 import axios from 'axios'
 import Navbar from '../component/Navbar'
-import RegisterBg from "../assets/register-bg.jpg"
 import { useNavigate } from 'react-router'
 import { Eye, EyeClosed } from 'lucide-react'
 import Footer from '../component/Footer'
@@ -37,7 +36,7 @@ const checkUser=async ()=>{
     },1000)
 
    }else{
-    toast.error("Invalid credentials", {id:"loginFailed"});
+    toast.error("Invalid Email or password", {id:"loginFailed"});
    }
  }catch(e){
   toast.error("Login failed. Please try again.", {id:"loginFailed"});

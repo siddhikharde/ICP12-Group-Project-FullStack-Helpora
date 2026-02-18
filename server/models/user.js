@@ -21,7 +21,9 @@ import { model, Schema } from "mongoose";
     default:"Book",
     type:String,
     required:true
- }
+ },profileImage:{
+    type:String,
+ },
  })
 
 const User = model("User",userSchema);
