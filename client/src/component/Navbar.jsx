@@ -93,12 +93,37 @@ function Navbar() {
               />
 
               <div className="flex flex-col items-start px-4 py-7">
-                <Link to="/profile" className="text-xl hover:text-[#2b92f3]">
-                  Profile
-                </Link>
-                <Link to="/profile" className="text-xl hover:text-[#2b92f3]">
-                  Your Bookings
-                </Link>
+                {userData?.service === "Provide" ? (
+                  <div className="flex flex-col items-start">
+                    <Link
+                      to="/profile"
+                      className="text-xl hover:text-[#2b92f3]"
+                    >
+                      Service Profile
+                    </Link>
+                    <Link
+                      to="/profile"
+                      className="text-xl hover:text-[#2b92f3]"
+                    >
+                      Your Bookings
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-start">
+                    <Link
+                      to="/profile"
+                      className="text-xl hover:text-[#2b92f3]"
+                    >
+                      User Profile
+                    </Link>
+                    <Link
+                      to="/profile"
+                      className="text-xl hover:text-[#2b92f3]"
+                    >
+                      Your Bookings
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -163,50 +188,74 @@ function Navbar() {
               Contact
             </Link>
             <span className="relative">
-            {userData?.fullName ? (
-              <div
-                className="flex items-center"
-                onClick={() => {
-                  setIsProfileOpen(!isProfileOpen);
-                }}
-              >
-                <p className="text-xl px-3 py-1 font-bold bg-[#2b92f3] rounded-full text-white text-center mx-1">
-                  {userData.fullName.slice(" ")[0]}
-                </p>
-                <p className="mr-4 text-xl font-bold">{userData.fullName}</p>
-              </div>
-              
-            ) : (
-              <div>
-                <Link
-                  to="/login"
-                  className="font-bold text-xl py-2 hover:text-[#2b92f3]"
+              {userData?.fullName ? (
+                <div
+                  className="flex items-center"
+                  onClick={() => {
+                    setIsProfileOpen(!isProfileOpen);
+                  }}
                 >
-                  Login
-                </Link>
-              </div>
-            )}
+                  <p className="text-xl px-3 py-1 font-bold bg-[#2b92f3] rounded-full text-white text-center mx-1">
+                    {userData.fullName.slice(" ")[0]}
+                  </p>
+                  <p className="mr-4 text-xl font-bold">{userData.fullName}</p>
+                </div>
+              ) : (
+                <div>
+                  <Link
+                    to="/login"
+                    className="font-bold text-xl py-2 hover:text-[#2b92f3]"
+                  >
+                    Login
+                  </Link>
+                </div>
+              )}
             </span>
             {isProfileOpen && (
-            <div className="absolute bg-white border border-gray-300 w-50 h-28 top-58 right-auto rounded-b-lg">
-              <X
-                size={35}
-                className="absolute right-2 top-2"
-                onClick={() => {
-                  setIsProfileOpen(false);
-                }}
-              />
+              <div className="absolute bg-white border border-gray-300 w-50 h-28 top-58 right-auto rounded-b-lg">
+                <X
+                  size={35}
+                  className="absolute right-2 top-2"
+                  onClick={() => {
+                    setIsProfileOpen(false);
+                  }}
+                />
 
-              <div className="flex flex-col items-start px-4 py-7">
-                <Link to="/profile" className="text-xl hover:text-[#2b92f3]">
-                  Profile
-                </Link>
-                <Link to="/profile" className="text-xl hover:text-[#2b92f3]">
-                  Your Bookings
-                </Link>
+                <div className="flex flex-col items-start px-4 py-7">
+                  {userData?.service === "Provide" ? (
+                    <div className="flex flex-col items-start">
+                      <Link
+                        to="/profile"
+                        className="text-xl hover:text-[#2b92f3]"
+                      >
+                        Service Profile
+                      </Link>
+                      <Link
+                        to="/profile"
+                        className="text-xl hover:text-[#2b92f3]"
+                      >
+                        Your Bookings
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-start">
+                      <Link
+                        to="/profile"
+                        className="text-xl hover:text-[#2b92f3]"
+                      >
+                        User Profile
+                      </Link>
+                      <Link
+                        to="/profile"
+                        className="text-xl hover:text-[#2b92f3]"
+                      >
+                        Your Bookings
+                      </Link>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
             {userData ? (
               <div>
