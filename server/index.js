@@ -6,6 +6,7 @@ import User from './models/user.js';
 import jwt from './middleware/jwt.js';
 import ImageKit from '@imagekit/nodejs'
 import { postLogin, postRegister } from './controllers/aouth.js';
+import { getServicemenProfile, updateServicemenProfile } from './controllers/servicemen.js';
 dotenv.config();
 
 const app = express();
@@ -87,6 +88,11 @@ app.post('/login',postLogin);
     })
   }
  });
+
+
+app.get('/servicemen/:id', jwt, getServicemenProfile);
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   connectDB();
