@@ -18,6 +18,7 @@ function Register() {
     phoneNo: "",
     role: "",
     location: "",
+  
 
   })
 
@@ -28,6 +29,7 @@ function Register() {
     certifications: "",
     professionalSummary: "",
     serviceAreas: "",
+    price :0
   });
   const saveUser = async () => {
     const { fullName, email, password, phoneNo, role, location } = newUser;
@@ -37,7 +39,7 @@ function Register() {
     }
 
     if (role === "Provide") {
-      if (!providerData.field || !providerData.experience || !providerData.serviceAreas) {
+      if (!providerData.field || !providerData.experience || !providerData.serviceAreas ) {
         toast.error("Please fill provider details");
         return;
       }
@@ -48,6 +50,7 @@ function Register() {
         ...newUser,
         field: providerData.field,
         experience: providerData.experience,
+        price:providerData.price,
         skills: role === "Provide" ? providerData.skills.split(",").map((s) => s.trim()) : [],
         serviceAreas: providerData.serviceAreas
           ? providerData.serviceAreas.split(",").map((s) => s.trim())
@@ -150,6 +153,21 @@ function Register() {
                   type="text"
                   onChange={(e) =>
                     setProviderData({ ...providerData, experience: e.target.value })
+                  }
+                />
+              </div>
+              <div className='flex flex-col gap-2 w-full md:w-[48%]'>
+                <label className="text-[15px] text-gray-700">
+                  Price (₹)
+                </label>
+                <Input
+                  placeholder="500"
+                  type="text"
+                  onChange={(e) =>
+                    setProviderData({
+                      ...providerData,
+                      price: e.target.value,
+                    })
                   }
                 />
               </div>
