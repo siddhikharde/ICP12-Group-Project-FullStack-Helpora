@@ -9,11 +9,10 @@ const servicemenSchema = new Schema({
         type:Number,
         required:true
     },
-      location: {
-      type: String,
-      required: true,
-    },
-
+      serviceAreas: {
+  type: [String],
+  required: true,
+},
     price: {
       type: Number,
       required: true,

@@ -9,7 +9,7 @@ dotenv.config();
 const postRegister=async (req,res)=>{
    try{
   const {fullName,email,password, phoneNo, role,
-      field,  experience, location, price, skills, professionalSummary,
+      field,  experience, location, price, skills, professionalSummary, serviceAreas,
   }=req.body;
   if(!fullName || !email || !password || !phoneNo || !role){
     return res.json({
@@ -28,7 +28,7 @@ const postRegister=async (req,res)=>{
   }
   
   if(role=="Provide"){
-     if (!field || !experience || !location || !price) {
+     if (!field || !experience || !location || !price || serviceAreas.length === 0) {
         return res.status(400).json({
           success: false,
           message: "Provider details are required",
@@ -43,6 +43,7 @@ const postRegister=async (req,res)=>{
     password:hashedPassword,
     phoneNo,
     role,
+     location,
   })
 
   const savedUser= await newUser.save();
@@ -51,7 +52,7 @@ const postRegister=async (req,res)=>{
         userId: savedUser._id,
         field,
         experience,
-        location,
+        serviceAreas: serviceAreas || [],
         price,
         skills: skills || [],
         professionalSummary,

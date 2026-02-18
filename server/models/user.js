@@ -24,6 +24,10 @@ import { model, Schema } from "mongoose";
  },profileImage:{
     type:String,
  },
+   location: {              
+    type: String,
+    required: true,
+  },
  })
 
 const User = model("User",userSchema);
