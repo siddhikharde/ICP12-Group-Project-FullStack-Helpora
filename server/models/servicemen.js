@@ -31,3 +31,5 @@ const servicemenSchema = new Schema({
 })
 
 const Servicemen = model('Servicemen', servicemenSchema);
+
+export default Servicemen;
