@@ -29,3 +29,5 @@ const servicemenSchema = new Schema({
         required:true
     }
 })
+
+const Servicemen = model('Servicemen', servicemenSchema);
