@@ -89,6 +89,8 @@ app.post('/login',postLogin);
   }
  });
 
+ app.get('/servicemenProfile/', getServicemenProfile);
+
 
 
 

@@ -1,6 +1,6 @@
-import Servicemen from "../models/servicemen";
-import User from "../models/user";
-import jwt from "../middleware/jwt";
+import Servicemen from "../models/servicemen.js";
+import User from "../models/user.js";
+import jwt from "../middleware/jwt.js";
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -26,3 +26,6 @@ const getServicemenProfile=async (req,res)=>{
         })
     }
 }
+
+
+export {getServicemenProfile};
