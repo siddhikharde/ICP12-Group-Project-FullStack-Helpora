@@ -30,4 +30,21 @@ const getServicemenProfile = async (req, res) => {
         });
     }
 }
-export { getServicemenProfile};
+
+const getAllServicemens = async (req, res) => {
+    try {
+        const providers = await Servicemen.find().populate("userId", "-password");
+        return res.json({
+            success: true,
+            message: "Servicemens fetched successfully",
+            data: providers,
+        });
+    } catch (e) {
+        return res.json({
+            success: false,
+            message: "Error fetching providers",
+            error: e.message,
+        })
+    }
+}
+export { getServicemenProfile, getAllServicemens };
