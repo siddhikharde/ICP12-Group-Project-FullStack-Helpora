@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import User from './models/user.js';
 import jwt from './middleware/jwt.js';
 import ImageKit from '@imagekit/nodejs'
+import { putProfileImg, putUser } from './controllers/user.js';
 import { postLogin, postRegister } from './controllers/aouth.js';
 import {getServicemenProfile, getAllServicemens, getServicemenById} from "./controllers/servicemen.js"
 dotenv.config();
@@ -39,63 +40,13 @@ app.get('/health',(req,res)=>{
 
 app.post('/register', postRegister);
 app.post('/login',postLogin);
- app.put('/user', jwt,  async (req, res)=>{
-  const {id, fullName, email, phoneNo}=req.body;
-       const user=await User.findByIdAndUpdate(id,{
-        fullName,
-        email,
-         phoneNo
-       })
 
-       const userData=await User.findById(id);
-       userData.password=undefined;
-   try{
-     if(user){
-      return res.json({
-        success:true,
-        message:"User Information Updated Successfully.",
-        data:userData
-      })
-   }
-    }catch(e){
-      return res.json({
-        success:false,
-        message:"Faild to update..",
-        error:e.message
-        
-      })
-    }
-
- })
-
- app.put("/profile-image", jwt , async (req, res)=>{
-  try{
-    const {id, profileImage}= req.body;
-    const updatedUser= await User.findByIdAndUpdate(
-      id,
-      {profileImage},
-      {new:true}
-    );
-     res.json({
-      success:true,
-      message:"Profile image updated",
-      data:updatedUser
-     })
-  }catch(e){
-    res.json({
-      success:false,
-      message: "Server error",
-    })
-  }
- });
+ app.put('/user', jwt, putUser );
+ app.put("/profile-image", jwt , putProfileImg);
 
  app.get('/servicemenProfile', jwt, getServicemenProfile);
  app.get('/servicemens', getAllServicemens);
  app.get('/servicemen/:id', getServicemenById);
-
-
-
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
