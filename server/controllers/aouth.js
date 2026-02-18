@@ -2,29 +2,22 @@ import dotenv from 'dotenv';
 import User from './../models/user.js';
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Servicemen from '../models/servicemen.js';
 
 dotenv.config();
 
 const postRegister=async (req,res)=>{
-  const {fullName,email,password, phoneNo, service}=req.body;
-  if(!fullName || !email || !password || !phoneNo || !service){
+   try{
+  const {fullName,email,password, phoneNo, role,
+      field,  experience, location, price, skills, professionalSummary,
+  }=req.body;
+  if(!fullName || !email || !password || !phoneNo || !role){
     return res.json({
       success:false,
       message:"All fields are required",
       data:null,
       });
   }
-
-   const salt = bcrypt.genSaltSync(10);
-  const hashedPassword=await bcrypt.hash(password,salt);
-  const newUser = new User({
-    fullName,
-    email,
-    password:hashedPassword,
-    phoneNo,
-    service
-  })
-
   const existingUser= await User.findOne({email});
   if(existingUser){
     return res.json({
@@ -33,8 +26,39 @@ const postRegister=async (req,res)=>{
       data:null,
     })
   }
-  try{
-    const savedUser=await newUser.save();
+  
+  if(role=="Provide"){
+     if (!field || !experience || !location || !price) {
+        return res.status(400).json({
+          success: false,
+          message: "Provider details are required",
+        });
+      }
+  }
+  const salt = bcrypt.genSaltSync(10);
+  const hashedPassword=await bcrypt.hash(password,salt);
+  const newUser = new User({
+    fullName,
+    email,
+    password:hashedPassword,
+    phoneNo,
+    role,
+  })
+
+  const savedUser= await newUser.save();
+  if(role=="Provide"){
+       const newProvider = new Servicemen({
+        userId: savedUser._id,
+        field,
+        experience,
+        location,
+        price,
+        skills: skills || [],
+        professionalSummary,
+      });
+
+      const savedProvider= await newProvider.save();
+  }
     return res.json({
       success:true,
       message:"User registered successfully",

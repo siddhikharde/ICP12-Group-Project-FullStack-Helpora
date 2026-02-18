@@ -17,7 +17,7 @@ import { model, Schema } from "mongoose";
     phoneNo:{
         type:String,
         required:true
- },service:{
+ },role:{
     default:"Book",
     type:String,
     required:true
