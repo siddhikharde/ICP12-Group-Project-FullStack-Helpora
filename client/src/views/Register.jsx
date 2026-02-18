@@ -16,7 +16,8 @@ function Register() {
     email: "",
     password: "",
     phoneNo: "",
-    role: ""
+    role: "",
+    location: "",
 
   })
 
@@ -26,16 +27,34 @@ function Register() {
     skills: "",
     certifications: "",
     professionalSummary: "",
+    serviceAreas: "",
   });
   const saveUser = async () => {
-    const { fullName, email, password, phoneNo, role } = newUser;
-    if (!fullName || !email || !password || !phoneNo || !role) {
+    const { fullName, email, password, phoneNo, role, location } = newUser;
+    if (!fullName || !email || !password || !phoneNo || !role || !location) {
       toast.error("All fields are required", { id: "registerFailed" });
       return;
     }
 
+    if (role === "Provide") {
+      if (!providerData.field || !providerData.experience || !providerData.serviceAreas) {
+        toast.error("Please fill provider details");
+        return;
+      }
+    }
+
     try {
-      const res = await axios.post("http://localhost:8800/register", newUser)
+      const userData = {
+        ...newUser,
+        field: providerData.field,
+        experience: providerData.experience,
+        skills: role === "Provide" ? providerData.skills.split(",").map((s) => s.trim()) : [],
+        serviceAreas: providerData.serviceAreas
+          ? providerData.serviceAreas.split(",").map((s) => s.trim())
+          : [],
+        professionalSummary: providerData.professionalSummary,
+      }
+      const res = await axios.post("http://localhost:8800/register", userData)
       console.log(res.data);
       if (res.data.success) {
         toast.success("Registration successful! Please login.", { id: "registerSuccess" });
@@ -90,6 +109,16 @@ function Register() {
             }} />
           </div>
           <div className='flex flex-col gap-2 w-full md:w-[48%]'>
+            <label className='text-[15px] text-gray-700'>Location</label>
+            <Input
+              placeholder='City / Area'
+              type='text'
+              onChange={(e) =>
+                setNewUser({ ...newUser, location: e.target.value })
+              }
+            />
+          </div>
+          <div className='flex flex-col gap-2 w-full md:w-[48%]'>
             <label className=' text-[15px] text-gray-700' >Service Type</label>
             <select className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
               onChange={(e) => {
@@ -114,18 +143,18 @@ function Register() {
                 />
               </div>
 
-             <div className='flex flex-col gap-2 w-full md:w-[48%]'>
+              <div className='flex flex-col gap-2 w-full md:w-[48%]'>
                 <label className="text-[15px] text-gray-700">Experience (Years)</label>
                 <Input
                   placeholder="Experience"
-                  type="number"
+                  type="text"
                   onChange={(e) =>
                     setProviderData({ ...providerData, experience: e.target.value })
                   }
                 />
               </div>
 
-             <div className='flex flex-col gap-2 w-full md:w-[48%]'>
+              <div className='flex flex-col gap-2 w-full md:w-[48%]'>
                 <label className="text-[15px] text-gray-700">Skills (comma separated)</label>
                 <Input
                   placeholder="Wiring, Repair, Installation"
@@ -135,12 +164,28 @@ function Register() {
                   }
                 />
               </div>
-
               <div className='flex flex-col gap-2 w-full md:w-[48%]'>
-                <label className="text-[15px] text-gray-700">Professional Summary</label>
+                <label className="text-[15px] text-gray-700">
+                  Service Areas (comma separated)
+                </label>
                 <Input
-                  placeholder="Tell about your experience"
+                  placeholder="Mumbai, Thane, Navi Mumbai"
                   type="text"
+                  onChange={(e) =>
+                    setProviderData({
+                      ...providerData,
+                      serviceAreas: e.target.value,
+                    })
+                  }
+                />
+              </div>
+
+              <div className='flex flex-col gap-2 w-full '>
+                <label className="text-[15px] text-gray-700">Professional Summary</label>
+                <textarea
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Tell about your experience"
+                  rows={4}
                   onChange={(e) =>
                     setProviderData({
                       ...providerData,
@@ -150,6 +195,7 @@ function Register() {
                 />
               </div>
             </>
+
           )}
 
         </div>
