@@ -1,6 +1,4 @@
 import Servicemen from "../models/servicemen.js";
-import User from "../models/user.js";
-import jwt from "../middleware/jwt.js";
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -49,31 +47,70 @@ const getAllServicemens = async (req, res) => {
 }
 
 const getServicemenById = async (req, res) => {
-  try {
-    const { id } = req.params;
+    try {
+        const { id } = req.params;
 
-    const provider = await Servicemen.findById(id).populate("userId", "-password");
+        const provider = await Servicemen.findById(id).populate("userId", "-password");
 
-    if (!provider) {
-      return res.json({
-        success: false,
-        message: "Servicemen not found",
-        data: null,
-      });
+        if (!provider) {
+            return res.json({
+                success: false,
+                message: "Servicemen not found",
+                data: null,
+            });
+        }
+
+        return res.json({
+            success: true,
+            message: "Servicemen fetched successfully",
+            data: provider,
+        });
+
+    } catch (e) {
+        return res.json({
+            success: false,
+            message: "Error fetching servicemen",
+            error: e.message,
+        });
     }
+};
 
-    return res.json({
-      success: true,
-      message: "Servicemen fetched successfully",
-      data: provider,
-    });
+const putServicemenProfile = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const {
+            field,
+            experience,
+            serviceAreas,
+            price,
+            skills,
+            availability,
+            professionalSummary,
+        } = req.body;
 
-  } catch (e) {
+        const updatedProvider = await Servicemen.findOneAndUpdate(
+           { userId: userId }, 
+           { field,
+            experience,
+            serviceAreas,
+            price,
+            skills,
+            availability,
+            professionalSummary,} ,{ new: true }
+        );
+        return res.json({
+            success: true,
+            message: "Profile updated successfully",
+            data: updatedProvider,
+        });
+    }catch (e) {
     return res.json({
       success: false,
-      message: "Error fetching servicemen",
+      message: "Error updating profile",
       error: e.message,
     });
   }
-};
-export { getServicemenProfile, getAllServicemens, getServicemenById };
+
+
+}
+export { getServicemenProfile, getAllServicemens, getServicemenById, putServicemenProfile };

@@ -1,6 +1,5 @@
-
 import dotenv from 'dotenv'; 
-import User from './models/user.js';
+import User from '../models/user.js';
 dotenv.config();
 
 const putUser=async (req, res)=>{
@@ -10,7 +9,6 @@ const putUser=async (req, res)=>{
         email,
          phoneNo
        })
-
        const userData=await User.findById(id);
        userData.password=undefined;
    try{
