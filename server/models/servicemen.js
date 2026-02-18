@@ -9,17 +9,34 @@ const servicemenSchema = new Schema({
         type:Number,
         required:true
     },
-    skills:{
-        type:[String],
-        required:true
+      location: {
+      type: String,
+      required: true,
+    },
+
+    price: {
+      type: Number,
+      required: true,
+    },
+     skills: {
+      type: [String],
+      default: [],
+    },
+ rating: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 5,
+    },
+     totalReviews: {
+      type: Number,
+      default: 0,
     },
     availability:{
         type:Boolean,
         default:true
     },
-    certifications:{
-        type:[String],
-    },
+
     professionalSummary:{
         type:String,
     },
@@ -27,8 +44,9 @@ const servicemenSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref:'User',
         required:true
-    }
-})
+    },
+    
+}, { timestamps: true })
 
 const Servicemen = model('Servicemen', servicemenSchema);
 
