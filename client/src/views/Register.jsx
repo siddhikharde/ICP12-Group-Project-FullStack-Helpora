@@ -10,102 +10,161 @@ import { Eye, EyeClosed } from 'lucide-react'
 import Footer from '../component/Footer'
 function Register() {
 
-  const [showPassword, setShowPassword]=useState(false);
-  const [newUser, setNewUser]=useState({
-    fullName:"",
-    email:"",
-    password:"",
-    phoneNo:"",
-    service:""
-  
+  const [showPassword, setShowPassword] = useState(false);
+  const [newUser, setNewUser] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    phoneNo: "",
+    role: ""
+
   })
-  const saveUser=async ()=>{
-    const {fullName,email,password,phoneNo,service}=newUser;
-    if(!fullName || !email || !password || !phoneNo || !service){
-      toast.error("All fields are required", {id:"registerFailed"});
+
+  const [providerData, setProviderData] = useState({
+    field: "",
+    experience: "",
+    skills: "",
+    certifications: "",
+    professionalSummary: "",
+  });
+  const saveUser = async () => {
+    const { fullName, email, password, phoneNo, role } = newUser;
+    if (!fullName || !email || !password || !phoneNo || !role) {
+      toast.error("All fields are required", { id: "registerFailed" });
       return;
     }
 
-    try{
-      const res= await axios.post("http://localhost:8800/register", newUser)
+    try {
+      const res = await axios.post("http://localhost:8800/register", newUser)
       console.log(res.data);
-      if(res.data.success){
-        toast.success("Registration successful! Please login.", {id:"registerSuccess"});
-        window.location.href="/login";
-      }else{
-        toast.error(res.data.message, {id:"registerFailed"});
+      if (res.data.success) {
+        toast.success("Registration successful! Please login.", { id: "registerSuccess" });
+        window.location.href = "/login";
+      } else {
+        toast.error(res.data.message, { id: "registerFailed" });
       }
-    }catch(error){
-      toast.error("Registration failed. Please try again.", {id:"registerFailed"});
+    } catch (error) {
+      toast.error("Registration failed. Please try again.", { id: "registerFailed" });
     }
   }
   return (<>
-     <Navbar/>
+    <Navbar />
     <div className='min-h-screen bg-cover bg-center  bg-gray-50 relative  px-4 flex justify-center pt-20'>
-    
-      <div className=' flex justify-center flex-col items-center mx-auto my-15 w-[95%] md:w-[450px] px-5 py-8 bg-white  shadow-lg rounded-lg gap-4 '>
-       <div className='flex flex-col items-center justify-center gap-3'>
-         <h1 className='text-3xl text-center font-bold text-[#2b92f3]'>Welcome to Helpora</h1>
-        <p className='text-lg text-center text-[#554d47]'>Find and book trusted local service providers</p>
-       </div>
-        <div className='w-full p-3 flex flex-col gap-5  '>
-          <div className='flex flex-col gap-2'>
+
+      <div className=' flex justify-center flex-col items-center mx-auto my-15 w-[95%] md:w-[1000px] px-5 py-8 bg-white  shadow-lg rounded-lg gap-4 '>
+        <div className='flex flex-col items-center justify-center gap-3'>
+          <h1 className='text-3xl text-center font-bold text-[#2b92f3]'>Welcome to Helpora</h1>
+          <p className='text-lg text-center text-[#554d47]'>Find and book trusted local service providers</p>
+        </div>
+        <div className='w-full p-3 flex flex-col md:flex-row md:flex-wrap gap-8'>
+          <div className='flex flex-col gap-2 w-full md:w-[48%]'>
             <label className=' text-[15px] text-gray-700' >Full Name</label>
-            <Input placeholder='Full Name' type='text' onChange={(e)=>{
-              setNewUser({...newUser , fullName:e.target.value})
+            <Input placeholder='Full Name' type='text' onChange={(e) => {
+              setNewUser({ ...newUser, fullName: e.target.value })
             }} />
           </div>
-           <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 w-full md:w-[48%]'>
             <label className=' text-[15px] text-gray-700 ' >Email</label>
-            <Input placeholder='Email' type='email'  onChange={(e)=>{
-              setNewUser({...newUser , email:e.target.value})
+            <Input placeholder='Email' type='email' onChange={(e) => {
+              setNewUser({ ...newUser, email: e.target.value })
             }} />
           </div>
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 w-full md:w-[48%]'>
             <label className=' text-[15px] text-gray-700' >Password</label>
-           <div className='w-full relative'>
-             <Input placeholder='Password' type={showPassword ? "text" : "password"} onChange={(e)=>{
-              setNewUser({...newUser , password:e.target.value})
-            }} />
-            {showPassword ? <Eye size={20} className='absolute text-[#2b92f3] right-3 top-[50%] translate-y-[-50%]  cursor-pointer' onClick={()=>{
-              setShowPassword(false);
-            }
-            } /> : <EyeClosed size={20} className='absolute text-gray-400 right-3 top-[50%] translate-y-[-50%]  cursor-pointer' onClick={()=>{
-              setShowPassword(true);
-            }}/>}
-           </div>
-  </div>
-            <div className='flex flex-col gap-2'> 
+            <div className='w-full relative'>
+              <Input placeholder='Password' type={showPassword ? "text" : "password"} onChange={(e) => {
+                setNewUser({ ...newUser, password: e.target.value })
+              }} />
+              {showPassword ? <Eye size={20} className='absolute text-[#2b92f3] right-3 top-[50%] translate-y-[-50%]  cursor-pointer' onClick={() => {
+                setShowPassword(false);
+              }
+              } /> : <EyeClosed size={20} className='absolute text-gray-400 right-3 top-[50%] translate-y-[-50%]  cursor-pointer' onClick={() => {
+                setShowPassword(true);
+              }} />}
+            </div>
+          </div>
+          <div className='flex flex-col gap-2 w-full md:w-[48%]'>
             <label className=' text-[15px] text-gray-700' >Phone Number</label>
-            <Input placeholder='Phone Number' type='text' onChange={(e)=>{
-              setNewUser({...newUser , phoneNo:e.target.value})
+            <Input placeholder='Phone Number' type='text' onChange={(e) => {
+              setNewUser({ ...newUser, phoneNo: e.target.value })
             }} />
           </div>
-           <div className='flex flex-col gap-2'> 
+          <div className='flex flex-col gap-2 w-full md:w-[48%]'>
             <label className=' text-[15px] text-gray-700' >Service Type</label>
-          <select className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-          onChange={(e)=>{
-            setNewUser({...newUser , service:e.target.value})
-            console.log(e.target.value)
-          }}>
-            <option value="">I want to </option>
-            <option value="Book">Book Service</option>
-            <option value="Provide">Provide Service</option>
-          </select>
+            <select className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+              onChange={(e) => {
+                setNewUser({ ...newUser, role: e.target.value })
+                console.log(e.target.value)
+              }}>
+              <option value="">I want to </option>
+              <option value="Book">Book Service</option>
+              <option value="Provide">Provide Service</option>
+            </select>
+          </div>
+          {newUser.role === "Provide" && (
+            <>
+              <div className='flex flex-col gap-2 w-full md:w-[48%]'>
+                <label className="text-[15px] text-gray-700">Service Field</label>
+                <Input
+                  placeholder="Electrician / Plumber"
+                  type="text"
+                  onChange={(e) =>
+                    setProviderData({ ...providerData, field: e.target.value })
+                  }
+                />
+              </div>
+
+             <div className='flex flex-col gap-2 w-full md:w-[48%]'>
+                <label className="text-[15px] text-gray-700">Experience (Years)</label>
+                <Input
+                  placeholder="Experience"
+                  type="number"
+                  onChange={(e) =>
+                    setProviderData({ ...providerData, experience: e.target.value })
+                  }
+                />
+              </div>
+
+             <div className='flex flex-col gap-2 w-full md:w-[48%]'>
+                <label className="text-[15px] text-gray-700">Skills (comma separated)</label>
+                <Input
+                  placeholder="Wiring, Repair, Installation"
+                  type="text"
+                  onChange={(e) =>
+                    setProviderData({ ...providerData, skills: e.target.value })
+                  }
+                />
+              </div>
+
+              <div className='flex flex-col gap-2 w-full md:w-[48%]'>
+                <label className="text-[15px] text-gray-700">Professional Summary</label>
+                <Input
+                  placeholder="Tell about your experience"
+                  type="text"
+                  onChange={(e) =>
+                    setProviderData({
+                      ...providerData,
+                      professionalSummary: e.target.value,
+                    })
+                  }
+                />
+              </div>
+            </>
+          )}
+
+        </div>
+
+        <Button title="Register" size="lg" color="primary" onClick={() => {
+          saveUser();
+        }} />
+        <div className='text-sm text-gray-600'>
+          Already have an account? <a href="/login" className='text-blue-500 hover:underline'>Login here</a>
         </div>
       </div>
-
-     <Button title="Register" size="lg" color="primary" onClick={()=>{
-        saveUser();
-     }} />
-       <div className='text-sm text-gray-600'>
-        Already have an account? <a href="/login" className='text-blue-500 hover:underline'>Login here</a>
-     </div>
+      <Toaster />
     </div>
-    <Toaster/>
-    </div>
-    <Footer/>
-    </>
+    <Footer />
+  </>
   )
 }
 
