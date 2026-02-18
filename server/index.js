@@ -6,7 +6,7 @@ import User from './models/user.js';
 import jwt from './middleware/jwt.js';
 import ImageKit from '@imagekit/nodejs'
 import { postLogin, postRegister } from './controllers/aouth.js';
-import {getServicemenProfile, getAllServicemens} from "./controllers/servicemen.js"
+import {getServicemenProfile, getAllServicemens, getServicemenById} from "./controllers/servicemen.js"
 dotenv.config();
 
 const app = express();
@@ -91,6 +91,7 @@ app.post('/login',postLogin);
 
  app.get('/servicemenProfile', jwt, getServicemenProfile);
  app.get('/servicemens', getAllServicemens);
+ app.get('/servicemen/:id', getServicemenById);
 
 
 
