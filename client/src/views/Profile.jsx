@@ -4,7 +4,7 @@ import UserImg from '../assets/user.png'
 import Button from '../component/Button';
 import Input from '../component/Input';
 import axios from 'axios';
-import { Cross, Plus, X } from 'lucide-react';
+import {  Plus, X } from 'lucide-react';
 import {
     ImageKitAbortError,
     ImageKitInvalidRequestError,
