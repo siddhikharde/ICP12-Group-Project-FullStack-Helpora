@@ -31,7 +31,7 @@ function Profile() {
     })
 
     const editUser = async () => {
-        const res = await axios.put("http://localhost:8800/user", {
+        const res = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/user`, {
             id: user._id,
             fullName: userData.name,
             email: userData.email,
@@ -52,7 +52,7 @@ function Profile() {
     const fileInputRef = useRef();
     const authenticator = async () => {
         try {
-            const response = await fetch(`http://localhost:8800/auth`);
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth`);
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(`Request failed with status ${response.status}: ${errorText}`);
@@ -96,7 +96,7 @@ function Profile() {
             console.log("Upload response:", uploadResponse);
             setProfileImage(uploadResponse.url);
 
-            const res = await axios.put("http://localhost:8800/profile-image",
+            const res = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/profile-image`,
                 {
                     id: user._id,
                     profileImage: uploadResponse.url
@@ -175,7 +175,6 @@ function Profile() {
                             }
                         </div>
                     </div>
-
                     <div className="border-t my-8"></div>
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="flex flex-col gap-2">
@@ -217,7 +216,6 @@ function Profile() {
                         </div>
                     )}
                 </div>
-
             </div>
             {imagePreview && (
                 <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-500">
@@ -236,10 +234,8 @@ function Profile() {
                             className="w-full h-full object-cover"
                         />
                     </div>
-
                 </div>
             )}
-         
         </div>
            <Footer/>
         </>

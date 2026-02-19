@@ -25,7 +25,7 @@ const checkUser=async ()=>{
     return;
   }
  try{
-  const res= await axios.post("http://localhost:8800/login", user);
+  const res= await axios.post(`${import.meta.env.VITE_API_BASE_URL}/login`, user);
    if(res.data.success){
     toast.success("Login successful! ", {id:"loginSuccess"});
    

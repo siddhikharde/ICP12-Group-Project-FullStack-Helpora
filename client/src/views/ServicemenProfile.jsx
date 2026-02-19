@@ -37,7 +37,7 @@ function ServicemenProfile() {
         const getProfile = async () => {
             try {
 
-                const res = await axios.get("http://localhost:8800/servicemenProfile", {
+                const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/servicemenProfile`, {
                     headers: { Authorization: `Bearer ${jwtToken}` }
                 });
                 if (res.data.success) {
@@ -65,7 +65,7 @@ function ServicemenProfile() {
     }, []);
 
     const editProfile = async () => {
-        const res = await axios.put("http://localhost:8800/servicemen-profile", {
+        const res = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/servicemen-profile`, {
             id: user._id,
             fullName: formData.name,
             email: formData.email,
@@ -91,7 +91,7 @@ function ServicemenProfile() {
     const fileInputRef = useRef();
     const authenticator = async () => {
         try {
-            const response = await fetch(`http://localhost:8800/auth`);
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth`);
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(`Request failed with status ${response.status}: ${errorText}`);
@@ -135,7 +135,7 @@ function ServicemenProfile() {
             console.log("Upload response:", uploadResponse);
             setProfileImage(uploadResponse.url);
 
-            const res = await axios.put("http://localhost:8800/profile-image",
+            const res = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/profile-image`,
                 {
                     id: user.userId._id,
                     profileImage: uploadResponse.url
@@ -183,7 +183,7 @@ function ServicemenProfile() {
                                         setFormData({ ...formData, availability:isAvailable });
                                         try {
                                             await axios.patch(
-                                                "http://localhost:8800/servicemen-availability",
+                                                `${import.meta.env.VITE_API_BASE_URL}/servicemen-availability`,
                                                 { id: user._id, availability: isAvailable },
                                                 { headers: { Authorization: `Bearer ${jwtToken}` } }
                                             );

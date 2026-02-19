@@ -57,7 +57,7 @@ function Register() {
           : [],
         professionalSummary: providerData.professionalSummary,
       }
-      const res = await axios.post("http://localhost:8800/register", userData)
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/register`, userData)
       console.log(res.data);
       if (res.data.success) {
         toast.success("Registration successful! Please login.", { id: "registerSuccess" });
