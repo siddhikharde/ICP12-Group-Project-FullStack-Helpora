@@ -8,6 +8,7 @@ import RegisterBg from "../assets/register-bg.jpg"
 import Navbar from '../component/Navbar'
 import { Eye, EyeClosed } from 'lucide-react'
 import Footer from '../component/Footer'
+import MultiSelect from '../component/MultiSelect'
 function Register() {
 
   const [showPassword, setShowPassword] = useState(false);
@@ -25,10 +26,10 @@ function Register() {
   const [providerData, setProviderData] = useState({
     field: "",
     experience: "",
-    skills: "",
+    skills: [],
     certifications: "",
     professionalSummary: "",
-    serviceAreas: "",
+    serviceAreas: [],
     price :0
   });
   const saveUser = async () => {
@@ -51,10 +52,8 @@ function Register() {
         field: providerData.field,
         experience: providerData.experience,
         price:providerData.price,
-        skills: role === "Provide" ? providerData.skills.split(",").map((s) => s.trim()) : [],
-        serviceAreas: providerData.serviceAreas
-          ? providerData.serviceAreas.split(",").map((s) => s.trim())
-          : [],
+        skills: providerData.skills,
+        serviceAreas: providerData.serviceAreas,
         professionalSummary: providerData.professionalSummary,
       }
       const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/register`, userData)
@@ -173,29 +172,35 @@ function Register() {
               </div>
 
               <div className='flex flex-col gap-2 w-full md:w-[48%]'>
-                <label className="text-[15px] text-gray-700">Skills (comma separated)</label>
-                <Input
-                  placeholder="Wiring, Repair, Installation"
-                  type="text"
-                  onChange={(e) =>
-                    setProviderData({ ...providerData, skills: e.target.value })
-                  }
-                />
+                <label className="text-[15px] text-gray-700">Skills</label>
+                  <MultiSelect selectedItems={providerData.skills}
+                placeholder={"Enter Skills"}
+                onAddItem={(val)=>{
+                  setProviderData({...providerData, skills:[...providerData.skills, val]})
+                }}
+                onRemoveItems={(val)=>{
+                  setProviderData({...providerData,
+                    skills:providerData.skills.filter((skill)=>skill!=val)
+                  })
+                }}
+                 />
               </div>
               <div className='flex flex-col gap-2 w-full md:w-[48%]'>
                 <label className="text-[15px] text-gray-700">
-                  Service Areas (comma separated)
+                  Service Areas
                 </label>
-                <Input
-                  placeholder="Mumbai, Thane, Navi Mumbai"
-                  type="text"
-                  onChange={(e) =>
-                    setProviderData({
-                      ...providerData,
-                      serviceAreas: e.target.value,
-                    })
-                  }
-                />
+               
+                <MultiSelect selectedItems={providerData.serviceAreas}
+                placeholder={"Enter Cites"}
+                onAddItem={(val)=>{
+                  setProviderData({...providerData, serviceAreas:[...providerData.serviceAreas, val]})
+                }}
+                onRemoveItems={(val)=>{
+                  setProviderData({...providerData,
+                    serviceAreas:providerData.serviceAreas.filter((city)=>city!=val)
+                  })
+                }}
+                 />
               </div>
 
               <div className='flex flex-col gap-2 w-full '>
