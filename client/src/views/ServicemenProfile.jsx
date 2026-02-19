@@ -227,8 +227,6 @@ function ServicemenProfile() {
                                    {formData.professionalSummary}
                                 </p>
                             </div>
-
-
                             <div>
                                 {
                                     !isEditing && (
