@@ -40,6 +40,7 @@ function ServicemenProfile() {
                     headers: { Authorization: `Bearer ${jwtToken}` }
                 });
                 if (res.data.success) {
+                    localStorage.setItem('user', JSON.stringify(res.data.data.user))
                     const data = res.data.data;
                     setUser(data);
                     setFormData({
@@ -68,10 +69,10 @@ function ServicemenProfile() {
             fullName: formData.name,
             email: formData.email,
             phoneNo: formData.phone,
-            field:formData.field,
-            experience:formData.experience,
-            serviceAreas:formData.serviceAreas,
-            price:formData.price,
+            field: formData.field,
+            experience: formData.experience,
+            serviceAreas: formData.serviceAreas,
+            price: formData.price,
             skills: formData.skills,
             professionalSummary: formData.professionalSummary
 
@@ -200,6 +201,7 @@ function ServicemenProfile() {
                                     Manage your personal information
                                 </p>
                             </div>
+
                             <div>
                                 {
                                     !isEditing && (
@@ -244,7 +246,61 @@ function ServicemenProfile() {
                                 }}
                                     disabled={!isEditing} />
                             </div>
-
+                            <div className="flex flex-col gap-2">
+                                <label className="font-semibold">Field</label>
+                                <Input
+                                    value={formData.field}
+                                    onChange={(e) => setFormData({ ...formData, field: e.target.value })}
+                                    disabled={!isEditing}
+                                />
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <label className="font-semibold">Field</label>
+                                <Input
+                                    value={formData.field}
+                                    onChange={(e) => setFormData({ ...formData, field: e.target.value })}
+                                    disabled={!isEditing}
+                                />
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <label className="font-semibold">Service Areas (comma separated)</label>
+                                <Input
+                                    value={formData.serviceAreas.join(", ")}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, serviceAreas: e.target.value.split(",").map(s => s.trim()) })
+                                    }
+                                    disabled={!isEditing}
+                                />
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <label className="font-semibold">Price</label>
+                                <Input
+                                    type="number"
+                                    value={formData.price}
+                                    onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                                    disabled={!isEditing}
+                                />
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <label className="font-semibold">Skills (comma separated)</label>
+                                <Input
+                                    value={formData.skills.join(", ")}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, skills: e.target.value.split(",").map(s => s.trim()) })
+                                    }
+                                    disabled={!isEditing}
+                                />
+                            </div>
+                            <div className="flex flex-col gap-2 md:col-span-2">
+                                <label className="font-semibold">Professional Summary</label>
+                                <textarea
+                                    value={formData.professionalSummary}
+                                    onChange={(e) => setFormData({ ...formData, professionalSummary: e.target.value })}
+                                    disabled={!isEditing}
+                                    rows={3}
+                                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
                         </div>
                         {isEditing && (
                             <div className='mt-8 text-righ'>
