@@ -38,6 +38,7 @@ const putUser=async (req, res)=>{
       {profileImage},
       {new:true}
     );
+    console.log("Updating profile for ID:", req.body.id);
      res.json({
       success:true,
       message:"Profile image updated",
