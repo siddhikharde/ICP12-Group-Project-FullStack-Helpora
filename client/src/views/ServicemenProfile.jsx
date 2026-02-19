@@ -62,12 +62,19 @@ function ServicemenProfile() {
         getProfile();
     }, []);
 
-    const editUser = async () => {
-        const res = await axios.put("http://localhost:8800/user", {
+    const editProfile = async () => {
+        const res = await axios.put("http://localhost:8800/servicemen-profile", {
             id: user._id,
-            fullName: userData.name,
-            email: userData.email,
-            phoneNo: userData.phone,
+            fullName: formData.name,
+            email: formData.email,
+            phoneNo: formData.phone,
+            field:formData.field,
+            experience:formData.experience,
+            serviceAreas:formData.serviceAreas,
+            price:formData.price,
+            skills: formData.skills,
+            professionalSummary: formData.professionalSummary
+
         },
             {
                 headers: { Authorization: `Bearer ${jwtToken}` }
@@ -211,7 +218,7 @@ function ServicemenProfile() {
                                 <label className="font-semibold">Full Name</label>
                                 <Input value={formData.name}
                                     onChange={(e) => {
-                                        setUserData({
+                                        setFormData({
                                             ...formData, name: e.target.value
                                         })
                                     }}
@@ -221,7 +228,7 @@ function ServicemenProfile() {
                             <div className="flex flex-col gap-2">
                                 <label className="font-semibold">Email</label>
                                 <Input value={formData.email} onChange={(e) => {
-                                    setUserData({
+                                    setFormData({
                                         ...formData, email: e.target.value
                                     })
                                 }}
@@ -231,7 +238,7 @@ function ServicemenProfile() {
                             <div className="flex flex-col gap-2">
                                 <label className="font-semibold">Phone Number</label>
                                 <Input value={formData.phone} onChange={(e) => {
-                                    setUserData({
+                                    setFormData({
                                         ...formData, phone: e.target.value
                                     })
                                 }}
@@ -242,7 +249,7 @@ function ServicemenProfile() {
                         {isEditing && (
                             <div className='mt-8 text-righ'>
                                 <Button title="Save Changes"
-                                    onClick={editUser} />
+                                    onClick={editProfile} />
                             </div>
                         )}
                     </div>
