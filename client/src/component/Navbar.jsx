@@ -93,10 +93,10 @@ function Navbar() {
               />
 
               <div className="flex flex-col items-start px-4 py-7">
-                {userData?.service === "Provide" ? (
+                {userData?.role === "Provide" ? (
                   <div className="flex flex-col items-start">
                     <Link
-                      to="/profile"
+                      to="/servicemen-profile"
                       className="text-xl hover:text-[#2b92f3]"
                     >
                       Service Profile
@@ -222,10 +222,10 @@ function Navbar() {
                 />
 
                 <div className="flex flex-col items-start px-4 py-7">
-                  {userData?.service === "Provide" ? (
+                  {userData?.role === "Provide" ? (
                     <div className="flex flex-col items-start">
                       <Link
-                        to="/profile"
+                        to="/servicemen-profile"
                         className="text-xl hover:text-[#2b92f3]"
                       >
                         Service Profile
