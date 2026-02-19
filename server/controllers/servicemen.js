@@ -125,7 +125,25 @@ const putServicemenProfile = async (req, res) => {
             error: e.message,
         });
     }
-
-
 }
-export { getServicemenProfile, getAllServicemens, getServicemenById, putServicemenProfile };
+
+const patchAvailability = async (req, res) => {
+  const { id, availability } = req.body;
+  try {
+    const updated = await Servicemen.findByIdAndUpdate(
+      id,
+      { availability },
+      { new: true }
+    );
+    res.json({ success: true, 
+        data: updated });
+  } catch (e) {
+    res.json({
+         success: false, 
+         message: "Server error" ,
+         error:e.message
+
+        });
+  }
+};
+export { getServicemenProfile, getAllServicemens, getServicemenById, putServicemenProfile, patchAvailability };

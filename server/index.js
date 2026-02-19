@@ -7,7 +7,7 @@ import jwt from './middleware/jwt.js';
 import ImageKit from '@imagekit/nodejs'
 import { putProfileImg, putUser } from './controllers/user.js';
 import { postLogin, postRegister } from './controllers/aouth.js';
-import {getServicemenProfile, getAllServicemens, getServicemenById, putServicemenProfile} from "./controllers/servicemen.js"
+import {getServicemenProfile, getAllServicemens, getServicemenById, putServicemenProfile, patchAvailability} from "./controllers/servicemen.js"
 dotenv.config();
 
 const app = express();
@@ -48,6 +48,7 @@ app.post('/login',postLogin);
  app.get('/servicemens', getAllServicemens);
  app.get('/servicemen/:id',jwt, getServicemenById);
  app.put('/servicemen-profile', jwt , putServicemenProfile);
+ app.patch('/availability', jwt, patchAvailability);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
