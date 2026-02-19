@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Input({placeholder, type="text", value, disabled = false, onChange}) {
+function Input({placeholder, type="text", value, disabled = false, onChange, onKeyDown}) {
   return (
     <div>
      <input 
@@ -9,6 +9,7 @@ function Input({placeholder, type="text", value, disabled = false, onChange}) {
       value={value}
       disabled={disabled}
       onChange={onChange}
+      onKeyDown={onKeyDown}
       className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
     </div>
