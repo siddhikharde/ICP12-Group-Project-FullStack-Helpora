@@ -13,7 +13,7 @@ import {
     upload,
 } from "@imagekit/react";
 import Footer from '../component/Footer';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 
 function ServicemenProfile() {
     const [imagePreview, setImagePreview] = useState(false)
@@ -224,7 +224,7 @@ function ServicemenProfile() {
                                     {formData.name}
                                 </h2>
                                 <p className="text-[#554d47] mt-2">
-                                    Manage your personal information
+                                   {formData.professionalSummary}
                                 </p>
                             </div>
 
@@ -359,7 +359,7 @@ function ServicemenProfile() {
 
                     </div>
                 )}
-
+<Toaster/>
             </div>
             <Footer />
         </>
