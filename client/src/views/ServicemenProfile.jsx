@@ -30,7 +30,8 @@ function ServicemenProfile() {
         serviceAreas: [],
         price: 0,
         skills: [],
-        professionalSummary: ""
+        professionalSummary: "",
+        availability: true
     });
     useEffect(() => {
         const getProfile = async () => {
@@ -40,7 +41,6 @@ function ServicemenProfile() {
                     headers: { Authorization: `Bearer ${jwtToken}` }
                 });
                 if (res.data.success) {
-                    localStorage.setItem('user', JSON.stringify(res.data.data.user))
                     const data = res.data.data;
                     setUser(data);
                     setFormData({
@@ -52,9 +52,10 @@ function ServicemenProfile() {
                         serviceAreas: data.serviceAreas || [],
                         price: data.price || 0,
                         skills: data.skills || [],
-                        professionalSummary: data.professionalSummary || ""
+                        professionalSummary: data.professionalSummary || "",
+                        availability: data.availability
                     })
-                    setProfileImage(data.profileImage || UserImg);
+                    setProfileImage(data.userId.profileImage || UserImg);
                 }
             } catch (e) {
                 toast.error("Failed to fetch profile:", e)
@@ -74,14 +75,15 @@ function ServicemenProfile() {
             serviceAreas: formData.serviceAreas,
             price: formData.price,
             skills: formData.skills,
-            professionalSummary: formData.professionalSummary
+            professionalSummary: formData.professionalSummary,
+            availability: formData.availability
 
         },
             {
                 headers: { Authorization: `Bearer ${jwtToken}` }
             })
         console.log(res.data)
-        localStorage.setItem("user", JSON.stringify(res.data.data));
+        localStorage.setItem("user", JSON.stringify(res.data.data.user));
         setIsEditing(false);
     }
 
@@ -135,7 +137,7 @@ function ServicemenProfile() {
 
             const res = await axios.put("http://localhost:8800/profile-image",
                 {
-                    id: user._id,
+                    id: user.userId._id,
                     profileImage: uploadResponse.url
                 },
                 {
@@ -148,7 +150,6 @@ function ServicemenProfile() {
             };
             setUser(updatedUser);
             localStorage.setItem("user", JSON.stringify(updatedUser));
-
             fileInputRef.current.value = "";
         } catch (error) {
             if (error instanceof ImageKitAbortError) {
@@ -168,8 +169,33 @@ function ServicemenProfile() {
         <>
             <div className='min-h-screen bg-gray-50 text-[#2a2e32]'>
                 <Navbar />
+
                 <div className=' max-w-full mx-auto mt-16 px-6'>
-                    <div className='bg-white rounded-2xl shadow-xl p-10 mt-20'>
+                    <div className='bg-white rounded-2xl shadow-xl p-10 mt-20 relative'>
+                        <div className="absolute top-6 right-6">
+                            <label className={`flex items-center gap-2 cursor-pointer ${formData.availability?"text-green-700":"text-red-700"} font-semibold`}>
+                                <span>{formData.availability ? "Available" : "Not Available"}</span>
+                                <input
+                                    type="checkbox"
+                                    checked={formData.availability}
+                                    onChange={async (e) => {
+                                        const isAvailable = e.target.checked;
+                                        setFormData({ ...formData, availability:isAvailable });
+                                        try {
+                                            await axios.patch(
+                                                "http://localhost:8800/servicemen-availability",
+                                                { id: user._id, availability: isAvailable },
+                                                { headers: { Authorization: `Bearer ${jwtToken}` } }
+                                            );
+                                            toast.success("Availability updated");
+                                        } catch (err) {
+                                            toast.error("Failed to update availability");
+                                        }
+                                    }}
+                                    className="toggle-checkbox"
+                                />
+                            </label>
+                        </div>
                         <div className='flex flex-col md:flex-row items-center gap-8'>
                             <div className="relative">
                                 <button
@@ -201,6 +227,7 @@ function ServicemenProfile() {
                                     Manage your personal information
                                 </p>
                             </div>
+
 
                             <div>
                                 {
@@ -291,6 +318,7 @@ function ServicemenProfile() {
                                     disabled={!isEditing}
                                 />
                             </div>
+
                             <div className="flex flex-col gap-2 md:col-span-2">
                                 <label className="font-semibold">Professional Summary</label>
                                 <textarea
@@ -298,7 +326,7 @@ function ServicemenProfile() {
                                     onChange={(e) => setFormData({ ...formData, professionalSummary: e.target.value })}
                                     disabled={!isEditing}
                                     rows={3}
-                                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
                         </div>

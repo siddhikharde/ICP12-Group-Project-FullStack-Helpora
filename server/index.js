@@ -48,7 +48,7 @@ app.post('/login',postLogin);
  app.get('/servicemens', getAllServicemens);
  app.get('/servicemen/:id',jwt, getServicemenById);
  app.put('/servicemen-profile', jwt , putServicemenProfile);
- app.patch('/availability', jwt, patchAvailability);
+ app.patch('/servicemen-availability', jwt, patchAvailability);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
