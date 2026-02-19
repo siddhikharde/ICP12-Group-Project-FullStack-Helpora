@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Input from './Input'
 
-function MultiSelect({ selectedItems, placeholder, onRemoveItems, onAddItem }) {
+function MultiSelect({ selectedItems, placeholder, onRemoveItems, onAddItem, disabled=false }) {
     const [newItem, setNewItem] = useState("");
 
     return (
@@ -29,7 +29,8 @@ function MultiSelect({ selectedItems, placeholder, onRemoveItems, onAddItem }) {
                             setNewItem("")
                         }
 
-                    }} />
+                    }}
+                    disabled={disabled} />
             </div>
         </div>
     )

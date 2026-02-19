@@ -14,6 +14,7 @@ import {
 } from "@imagekit/react";
 import Footer from '../component/Footer';
 import toast, { Toaster } from 'react-hot-toast';
+import MultiSelect from '../component/MultiSelect';
 
 function ServicemenProfile() {
     const [imagePreview, setImagePreview] = useState(false)
@@ -173,14 +174,14 @@ function ServicemenProfile() {
                 <div className=' max-w-full mx-auto mt-16 px-6'>
                     <div className='bg-white rounded-2xl shadow-xl p-10 mt-20 relative'>
                         <div className="absolute top-6 right-6">
-                            <label className={`flex items-center gap-2 cursor-pointer ${formData.availability?"text-green-700":"text-red-700"} font-semibold`}>
+                            <label className={`flex items-center gap-2 cursor-pointer ${formData.availability ? "text-green-700" : "text-red-700"} font-semibold`}>
                                 <span>{formData.availability ? "Available" : "Not Available"}</span>
                                 <input
                                     type="checkbox"
                                     checked={formData.availability}
                                     onChange={async (e) => {
                                         const isAvailable = e.target.checked;
-                                        setFormData({ ...formData, availability:isAvailable });
+                                        setFormData({ ...formData, availability: isAvailable });
                                         try {
                                             await axios.patch(
                                                 `${import.meta.env.VITE_API_BASE_URL}/servicemen-availability`,
@@ -224,7 +225,7 @@ function ServicemenProfile() {
                                     {formData.name}
                                 </h2>
                                 <p className="text-[#554d47] mt-2">
-                                   {formData.professionalSummary}
+                                    {formData.professionalSummary}
                                 </p>
                             </div>
                             <div>
@@ -287,17 +288,7 @@ function ServicemenProfile() {
                                     disabled={!isEditing}
                                 />
                             </div>
-                            <div className="flex flex-col gap-2">
-                                <label className="font-semibold">Service Areas (comma separated)</label>
-                                <Input
-                                    value={formData.serviceAreas.join(", ")}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, serviceAreas: e.target.value.split(",").map(s => s.trim()) })
-                                    }
-                                    disabled={!isEditing}
-                                />
-                            </div>
-                            <div className="flex flex-col gap-2">
+                             <div className="flex flex-col gap-2">
                                 <label className="font-semibold">Price</label>
                                 <Input
                                     type="number"
@@ -307,14 +298,45 @@ function ServicemenProfile() {
                                 />
                             </div>
                             <div className="flex flex-col gap-2">
+                                <label className="font-semibold">Service Areas</label>
+                                <MultiSelect selectedItems={formData.serviceAreas}
+                                    placeholder={"Enter Cites"}
+                                    onAddItem={(val) => {
+                                        setFormData({ ...formData, serviceAreas: [...formData.serviceAreas, val] })
+                                    }}
+                                    onRemoveItems={(val) => {
+                                        setFormData({
+                                            ...formData,
+                                            serviceAreas: formData.serviceAreas.filter((city) => city != val)
+                                        })
+                                    }}
+                                    disabled={!isEditing}
+                                />
+                            </div>
+                           
+                            <div className="flex flex-col gap-2">
                                 <label className="font-semibold">Skills (comma separated)</label>
-                                <Input
+                                               <MultiSelect selectedItems={formData.skills}
+                                    placeholder={"Enter Cites"}
+                                    onAddItem={(val) => {
+                                        setFormData({ ...formData, skills: [...formData.skills, val] })
+                                    }}
+                                    onRemoveItems={(val) => {
+                                        setFormData({
+                                            ...formData,
+                                            skills: formData.skills.filter((city) => city != val)
+                                        })
+                                    }}
+                                    disabled={!isEditing}
+                                />
+                           
+                                {/* <Input
                                     value={formData.skills.join(", ")}
                                     onChange={(e) =>
                                         setFormData({ ...formData, skills: e.target.value.split(",").map(s => s.trim()) })
                                     }
                                     disabled={!isEditing}
-                                />
+                                /> */}
                             </div>
 
                             <div className="flex flex-col gap-2 md:col-span-2">
@@ -357,7 +379,7 @@ function ServicemenProfile() {
 
                     </div>
                 )}
-<Toaster/>
+                <Toaster />
             </div>
             <Footer />
         </>
