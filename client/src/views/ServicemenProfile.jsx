@@ -329,14 +329,6 @@ function ServicemenProfile() {
                                     }}
                                     disabled={!isEditing}
                                 />
-                           
-                                {/* <Input
-                                    value={formData.skills.join(", ")}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, skills: e.target.value.split(",").map(s => s.trim()) })
-                                    }
-                                    disabled={!isEditing}
-                                /> */}
                             </div>
 
                             <div className="flex flex-col gap-2 md:col-span-2">

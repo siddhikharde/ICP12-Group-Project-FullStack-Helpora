@@ -155,23 +155,8 @@ function Register() {
                   }
                 />
               </div>
-              <div className='flex flex-col gap-2 w-full md:w-[48%]'>
-                <label className="text-[15px] text-gray-700">
-                  Price (₹)
-                </label>
-                <Input
-                  placeholder="500"
-                  type="text"
-                  onChange={(e) =>
-                    setProviderData({
-                      ...providerData,
-                      price: e.target.value,
-                    })
-                  }
-                />
-              </div>
-
-              <div className='flex flex-col gap-2 w-full md:w-[48%]'>
+             
+                  <div className='flex flex-col gap-2 w-full md:w-[48%]'>
                 <label className="text-[15px] text-gray-700">Skills</label>
                   <MultiSelect selectedItems={providerData.skills}
                 placeholder={"Enter Skills"}
@@ -185,6 +170,8 @@ function Register() {
                 }}
                  />
               </div>
+
+          
               <div className='flex flex-col gap-2 w-full md:w-[48%]'>
                 <label className="text-[15px] text-gray-700">
                   Service Areas
@@ -202,6 +189,21 @@ function Register() {
                 }}
                  />
               </div>
+               <div className='flex flex-col gap-2 w-full md:w-[48%]'>
+                <label className="text-[15px] text-gray-700">
+                  Price (₹)
+                </label>
+                <Input
+                  placeholder="500"
+                  type="text"
+                  onChange={(e) =>
+                    setProviderData({
+                      ...providerData,
+                      price: e.target.value,
+                    })
+                  }
+                />
+              </div>
 
               <div className='flex flex-col gap-2 w-full '>
                 <label className="text-[15px] text-gray-700">Professional Summary</label>
@@ -217,6 +219,7 @@ function Register() {
                   }
                 />
               </div>
+              
             </>
 
           )}
