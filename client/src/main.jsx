@@ -12,6 +12,7 @@ import Service from './views/Service.jsx'
 import Contact from './views/Contact.jsx'
 import About from './views/About.jsx'
 import Profile from './views/Profile.jsx'
+import ServicemenProfile from './views/ServicemenProfile.jsx'
 
 
 
@@ -28,6 +29,7 @@ root.render(
   <Route path='/service' element={<Service/>}/>
   <Route path='/contact' element={<Contact/>}/>
   <Route path='/profile' element={<Profile/>}/>
+  <Route path='/servicemen-profile' element={<ServicemenProfile/>}/>
 </Routes>
 </BrowserRouter>
 )
