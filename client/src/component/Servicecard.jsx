@@ -2,14 +2,12 @@ import React from "react";
 import { MapPin, Clock } from "lucide-react";
 import Button from "../component/Button";
 
-function Servicecard({img, name, profession, location, experience, price}) {
+function Servicecard({ img, name, profession, location, experience, price, onClick }) {
   return (
     <div className="border w-70 relative border-gray-300 rounded-xl cursor-pointer shadow-lg">
-      <img
-        src={img}
-        width={290}
-        className="rounded-t-xl"
-      />
+      <div className="bg-[#ebf9f9] h-40 rounded-t-xl flex items-center justify-center">
+        <p className="text-5xl text-[#b1daf9] text-center px-6 py-4">{img}</p>
+      </div>
       <div className="p-4">
         <p className="text-xl font-bold">{name}</p>
         <p className="text-gray-500">{profession}</p>
@@ -29,9 +27,7 @@ function Servicecard({img, name, profession, location, experience, price}) {
           <Button
             title={"View Profile"}
             size="sm"
-            onClick={() => {
-              window.location.href = "/serviceinfo";
-            }}
+            onClick={onClick}
           />
         </div>
       </div>

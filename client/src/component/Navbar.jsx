@@ -187,7 +187,7 @@ function Navbar() {
             >
               Contact
             </Link>
-            <span className="relative">
+            <span className="relative my-3">
               {userData?.fullName ? (
                 <div
                   className="flex items-center"

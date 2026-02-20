@@ -28,7 +28,7 @@ root.render(
   <Route path='/service-provider' element={<Provider/>}/>
   <Route path='/about' element={<About/>}/>
   <Route path='/service' element={<Service/>}/>
-  <Route path='serviceinfo' element={<Serviceinfo/>}/>
+  <Route path='/serviceinfo/:id' element={<Serviceinfo/>}/>
   <Route path='/contact' element={<Contact/>}/>
   <Route path='/profile' element={<Profile/>}/>
   <Route path='/servicemen-profile' element={<ServicemenProfile/>}/>

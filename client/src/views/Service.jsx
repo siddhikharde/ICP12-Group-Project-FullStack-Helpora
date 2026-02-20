@@ -1,8 +1,23 @@
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
 import Servicecard from "../component/Servicecard";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function Service() {
+  const [serviceData, setServiceData] = useState([]);
+  const loadData = async () => {
+    const responce = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/servicemens`,
+    );
+    console.log(responce.data.data);
+    setServiceData(responce.data.data);
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
     <div>
       <Navbar />
@@ -15,14 +30,23 @@ function Service() {
         </p>
       </div>
       <div className="flex justify-center items-center gap-10 flex-wrap mb-20">
-        <Servicecard
-          img="../src/assets/home_bg.jpg"
-          name={"Atharv Bolke"}
-          profession={"Developer"}
-          location={"Mumbai"}
-          experience={5}
-          price={500}
-        />
+        {serviceData.map((service, idx) => {
+          return (
+            <Servicecard
+              key={service._id}
+              img={service.userId.fullName.slice(" ")[0].toUpperCase()}
+              name={service.userId.fullName}
+              profession={service.field}
+              location={service.userId.location}
+              experience={service.experience}
+              price={service.price}
+                onClick={() => {
+                  window.location.href = `/serviceinfo/${service._id}`;
+                  console.log(service._id);
+                }}
+            />
+          );
+        })}
       </div>
       <Footer />
     </div>
