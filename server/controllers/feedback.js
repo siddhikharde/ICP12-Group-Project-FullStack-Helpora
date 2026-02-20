@@ -1,3 +1,8 @@
+import feedback from "../models/feedback.js";
+import dotenv from "dotenv"
+
+dotenv.config();
+
 const postFeedback = async (req, res) => {
   const { name, discription } = req.body;
 
