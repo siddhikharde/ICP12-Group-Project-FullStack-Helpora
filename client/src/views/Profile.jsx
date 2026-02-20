@@ -26,8 +26,8 @@ function Profile() {
         id: user._id,
         name: user.fullName,
         email: user.email,
-        phone: user.phoneNo
-
+        phone: user.phoneNo,
+        location:user.location
     })
 
     const editUser = async () => {
@@ -36,6 +36,7 @@ function Profile() {
             fullName: userData.name,
             email: userData.email,
             phoneNo: userData.phone,
+            location:userData.location
         },
             {
                 headers: { Authorization: `Bearer ${jwtToken}` }
@@ -203,6 +204,16 @@ function Profile() {
                             <Input value={userData.phone} onChange={(e) => {
                                 setUserData({
                                     ...userData, phone: e.target.value
+                                })
+                            }}
+                                disabled={!isEditing} />
+                        </div>
+
+                         <div className="flex flex-col gap-2">
+                            <label className="font-semibold">Address</label>
+                            <Input value={userData.location} onChange={(e) => {
+                                setUserData({
+                                    ...userData, location: e.target.value
                                 })
                             }}
                                 disabled={!isEditing} />
