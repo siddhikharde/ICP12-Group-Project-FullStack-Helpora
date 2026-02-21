@@ -1,12 +1,12 @@
 import feedback from "../models/feedback.js";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 
 dotenv.config();
 
 const postFeedback = async (req, res) => {
-  const { name, discription } = req.body;
+  const { username, discription } = req.body;
 
-  if (!name) {
+  if (!username) {
     res.json({
       status: false,
       message: "name is requied",
@@ -20,7 +20,7 @@ const postFeedback = async (req, res) => {
   }
 
   const newfeedback = new feedback({
-    name,
+    username,
     discription,
   });
 
@@ -33,21 +33,21 @@ const postFeedback = async (req, res) => {
     });
   } catch (error) {
     res.json({
-      status: true,
-      message: "feedback not send",
+      status: false,
+      message: error.message,
     });
   }
   res.json({
     status: true,
     message: "feedback send successfully",
   });
-}
-
+};
 
 const getFeedback = async (req, res) => {
-  const { id } = req.params;
   try {
-    const feedbackResponce = await feedback.findById(id);
+    const feedbackResponce = await feedback.find().sort({
+      createdAt: -1,
+    });
 
     if (!feedbackResponce) {
       res.json({
@@ -64,10 +64,10 @@ const getFeedback = async (req, res) => {
   } catch (error) {
     res.json({
       status: false,
-      message: "data not fetched",
+      message: error.message,
       data: null,
     });
   }
-}
+};
 
-export {getFeedback, postFeedback};
+export { getFeedback, postFeedback };

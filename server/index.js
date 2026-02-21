@@ -63,7 +63,7 @@ app.get("/servicemen/:id", jwt, getServicemenById);
 app.put("/servicemen-profile", jwt, putServicemenProfile);
 app.patch("/servicemen-availability", jwt, patchAvailability);
 
-app.get("/feedback/:id", getFeedback);
+app.get("/feedback", getFeedback);
 app.post("/feedback", postFeedback);
 
 app.listen(PORT, () => {

@@ -39,10 +39,11 @@ function Serviceinfo() {
         key={serviceData?.userId?._id}
         name={serviceData?.userId?.fullName}
         profession={serviceData?.field}
-        location={serviceData?.location}
+        location={serviceData?.userId?.location}
         experience={serviceData?.experience}
         price={serviceData?.price}
         skills={serviceData?.skills}
+        contact={serviceData?.userId?.phoneNo}
       />
       <Footer />
     </div>

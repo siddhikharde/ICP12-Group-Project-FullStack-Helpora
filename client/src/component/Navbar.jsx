@@ -83,7 +83,7 @@ function Navbar() {
           )}
 
           {isProfileOpen && (
-            <div className="absolute bg-white border border-gray-300 w-50 h-28 top-13 right-24 rounded-b-lg">
+            <div className="absolute bg-white border border-gray-300 w-50 h-20 top-13 right-24 rounded-b-lg">
               <X
                 size={35}
                 className="absolute right-2 top-2"
@@ -101,12 +101,6 @@ function Navbar() {
                     >
                       Service Profile
                     </Link>
-                    <Link
-                      to="/profile"
-                      className="text-xl hover:text-[#2b92f3]"
-                    >
-                      Your Bookings
-                    </Link>
                   </div>
                 ) : (
                   <div className="flex flex-col items-start">
@@ -115,12 +109,6 @@ function Navbar() {
                       className="text-xl hover:text-[#2b92f3]"
                     >
                       User Profile
-                    </Link>
-                    <Link
-                      to="/profile"
-                      className="text-xl hover:text-[#2b92f3]"
-                    >
-                      Your Bookings
                     </Link>
                   </div>
                 )}
@@ -212,7 +200,7 @@ function Navbar() {
               )}
             </span>
             {isProfileOpen && (
-              <div className="absolute bg-white border border-gray-300 w-50 h-28 top-58 right-auto rounded-b-lg">
+              <div className="absolute bg-white border border-gray-300 w-50 h-20 top-58 right-auto rounded-b-lg">
                 <X
                   size={35}
                   className="absolute right-2 top-2"
@@ -230,12 +218,6 @@ function Navbar() {
                       >
                         Service Profile
                       </Link>
-                      <Link
-                        to="/profile"
-                        className="text-xl hover:text-[#2b92f3]"
-                      >
-                        Your Bookings
-                      </Link>
                     </div>
                   ) : (
                     <div className="flex flex-col items-start">
@@ -244,12 +226,6 @@ function Navbar() {
                         className="text-xl hover:text-[#2b92f3]"
                       >
                         User Profile
-                      </Link>
-                      <Link
-                        to="/profile"
-                        className="text-xl hover:text-[#2b92f3]"
-                      >
-                        Your Bookings
                       </Link>
                     </div>
                   )}
