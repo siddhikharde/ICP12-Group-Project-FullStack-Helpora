@@ -70,7 +70,7 @@ function Register() {
   }
   return (<>
     <Navbar />
-    <div className='min-h-screen bg-cover bg-center  bg-gray-50 relative  px-4 flex justify-center pt-20'>
+    <div className='min-h-screen  bg-gray-50 relative  px-4 flex justify-center pt-20'>
 
       <div className=' flex justify-center flex-col items-center mx-auto my-15 w-[95%] md:w-[1000px] px-5 py-8 bg-white  shadow-lg rounded-lg gap-4 '>
         <div className='flex flex-col items-center justify-center gap-3'>
