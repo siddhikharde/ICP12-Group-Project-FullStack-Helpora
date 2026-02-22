@@ -21,6 +21,14 @@ function Infocard({
     discription: "",
   });
 
+  const fetchedData = async () => {
+    const responce = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/feedback`,
+    );
+    setFeedbackList(responce.data.data);
+    console.log(responce.data.data);
+  };
+
   const postData = async () => {
     const postResponce = await axios.post(
       `${import.meta.env.VITE_API_BASE_URL}/feedback`,
@@ -33,19 +41,13 @@ function Infocard({
         username: "",
         discription: "",
       })
+      fetchedData();
     } else {
       toast.error("Feedback Not Send");
     }
   };
 
-  const fetchedData = async () => {
-    const responce = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/feedback`,
-    );
-    setFeedbackList(responce.data.data);
-    console.log(responce.data.data);
-  };
-
+  
   useEffect(() => {
     fetchedData();
   }, []);
@@ -92,7 +94,7 @@ function Infocard({
         <div className="flex justify-start flex-wrap gap-2">
           {skills.map((skill, idx) => {
             return (
-              <p className="text-lg w-fit my-2 bg-green-400 cursor-pointer px-3 text-white py-1 rounded-2xl">
+              <p key={idx} className="text-lg w-fit my-2 bg-green-400 cursor-pointer px-3 text-white py-1 rounded-2xl">
                 {skill}
               </p>
             );
@@ -104,8 +106,11 @@ function Infocard({
           <Button title={"Contact Serviceman"} size="lg" />
         </a>
       </div>
-      <div className="flex mt-10 justify-center flex-col m-auto items-center mx-auto  w-[90%] md:w-[450px]  bg-white px-5 py-8 h-auto rounded-2xl  shadow-lg rounded-lg gap-5  ">
-        <p className="text-3xl text-center">Customer Reviews</p>
+      <div className="max-w-full mx-auto mt-16 flex flex-col gap-10 py-10 px-4">
+        <h1 className='text-3xl text-center font-bold text-[#2b92f3]'>Customer Reviews</h1>
+        <div className="flex flex-col md:flex-row gap-5 items-center justify-center ">
+           <div className="flex mt-10 justify-center flex-col m-auto items-center mx-auto  w-[90%] md:w-[450px]  bg-white px-5 py-8 h-auto  shadow-lg rounded-2xl gap-5  ">
+        <p className="text-3xl text-center">Add Reviews</p>
         <div className='w-full p-3 flex flex-col gap-5  '>
           <div className='flex flex-col gap-2'>
             <Input
@@ -121,6 +126,7 @@ function Infocard({
           <div className='flex flex-col gap-2'>
             <textarea
               type="text"
+              rows={3}
               value={feedbackData.discription}
               placeholder="Enter Feedback.."
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -135,13 +141,11 @@ function Infocard({
           size="lg"
           onClick={() => {
             postData();
-            fetchedData();
           }}
         />
-
       </div>
-      <div className="max-w-3xl mx-auto mt-12 space-y-6 max-h-[400px] overflow-y-auto px-4 pb-6">
-
+      
+<div className="max-w-3xl mx-auto mt-12 space-y-6 max-h-[400px] overflow-y-auto rounded-xl px-4 pb-6 scroll-smooth bg-gray-50">
         {feedbackList.length === 0 ? (
           <p className="text-center text-gray-400 text-lg">
             No reviews yet. Be the first to review!
@@ -157,7 +161,7 @@ function Infocard({
                   {item.username?.charAt(0).toUpperCase()}
                 </div>
 
-                <div>
+                <div >
                   <p className="font-semibold text-lg">
                     {item.username}
                   </p>
@@ -176,6 +180,8 @@ function Infocard({
             </div>
           ))
         )}
+      </div>    
+        </div>
       </div>
       <Toaster />
     </div>
