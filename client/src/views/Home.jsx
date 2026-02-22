@@ -12,7 +12,7 @@ function Home() {
   return (
     <div>
       <Navbar />
-      <div className="bg-[url(./assets/home_bg.jpg)] h-200 bg-cover bg-center mb-30 flex flex-col items-center justify-center flex-wrap">
+      <div className="bg-[url(./assets/home_bg.jpg)] h-[90vh] bg-cover bg-center mb-30 flex flex-col items-center justify-center flex-wrap">
         <p className=" text-5xl text-center md:text-7xl font-bold text-[#2a2e32]">
           Find Trusted
         </p>

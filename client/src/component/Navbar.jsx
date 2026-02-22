@@ -20,7 +20,7 @@ function Navbar() {
 
   return (
     <div>
-      <div className="flex justify-between items-center py-3 px-10 fixed top-0 w-full border-b pb-2 border-gray-500 bg-white z-10">
+      <div className="flex justify-between items-center py-3 px-10 fixed top-0 w-full border-0 shadow-xl pb-2 border-gray-500 bg-white z-10">
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
             <HandHelping
