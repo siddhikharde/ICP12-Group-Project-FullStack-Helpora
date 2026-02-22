@@ -106,7 +106,7 @@ function Infocard({
           <Button title={"Contact Serviceman"} size="lg" />
         </a>
       </div>
-      <div className="max-w-full mx-auto mt-16 flex flex-col gap-10 py-10 px-4">
+      <div className="max-w-full mx-auto mt-10 flex flex-col gap-10 py-10 px-4">
         <h1 className='text-3xl text-center font-bold text-[#2b92f3]'>Customer Reviews</h1>
         <div className="flex flex-col md:flex-row gap-5 items-center justify-center ">
            <div className="flex mt-10 justify-center flex-col m-auto items-center mx-auto  w-[90%] md:w-[450px]  bg-white px-5 py-8 h-auto  shadow-lg rounded-2xl gap-5  ">

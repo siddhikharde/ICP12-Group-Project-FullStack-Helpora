@@ -59,7 +59,9 @@ function Service() {
   </div>
 </div>
       <div className="flex justify-center items-center gap-10 flex-wrap mb-20">
-        {filteredServices.map((service, idx) => {
+        {filteredServices.length==0 ?(
+          <p className="text-gray-400 text-2xl text-center mt-10">No Services Found</p>
+        ):(filteredServices.map((service, idx) => {
           return (
             <Servicecard
               key={service._id}
@@ -75,7 +77,7 @@ function Service() {
                 }}
             />
           );
-        })}
+        }))}
       </div>
       <Footer />
     </div>
