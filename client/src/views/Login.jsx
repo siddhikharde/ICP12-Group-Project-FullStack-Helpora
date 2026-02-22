@@ -46,7 +46,7 @@ const checkUser=async ()=>{
   return (
     <>
    <Navbar/>
-    <div className='min-h-screen bg-cover bg-center relative px-4 flex justify-center  bg-gray-50 pt-20'
+    <div className='min-h-screen relative px-4 flex justify-center  bg-gray-50 pt-20'
      >
       <div className=' flex justify-center flex-col m-auto items-center mx-auto  w-[90%] md:w-[450px]  bg-white px-5 py-8 h-auto rounded-2xl  shadow-lg rounded-lg gap-5 '>
        <div className='flex flex-col items-center justify-center gap-3'>

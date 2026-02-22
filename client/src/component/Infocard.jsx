@@ -3,6 +3,7 @@ import { MapPin, Clock } from "lucide-react";
 import Button from "../component/Button";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import Input from "./Input";
 
 function Infocard({
   img,
@@ -15,12 +16,10 @@ function Infocard({
   contact,
 }) {
   const [feedbackList, setFeedbackList] = useState([]);
-  const [feedbackData, setFeedbackData] = useState([
-    {
-      username: "",
-      discription: "",
-    },
-  ]);
+  const [feedbackData, setFeedbackData] = useState({
+    username: "",
+    discription: "",
+  });
 
   const postData = async () => {
     const postResponce = await axios.post(
@@ -30,6 +29,10 @@ function Infocard({
     setFeedbackData(postResponce.data.data);
     if (postResponce.data) {
       toast.success("Feedback Recorded");
+      setFeedbackData({
+        username: "",
+        discription: "",
+      })
     } else {
       toast.error("Feedback Not Send");
     }
@@ -58,7 +61,7 @@ function Infocard({
         </p>
       </div>
 
-      <div className="border w-[50vh] md:w-[100vh] mx-auto my-10 rounded-2xl border-gray-300 px-10 py-5 flex flex-col flex-wrap">
+      <div className="border max-w-3xl w-[90%] mx-auto my-10 rounded-2xl border-gray-300 px-10 py-5 flex flex-col flex-wrap">
         <p className="text-3xl">About</p>
         <p className="text-gray-500 my-2">
           Experienced with over 5 years in the industry. Specializing in
@@ -84,7 +87,7 @@ function Infocard({
         </div>
       </div>
 
-      <div className="border w-[50vh] md:w-[100vh] mx-auto my-10 rounded-2xl border-gray-300 px-10 py-5 flex flex-col flex-wrap">
+      <div className="border max-w-3xl w-[90%] mx-auto my-10 rounded-2xl border-gray-300 px-10 py-5 flex flex-col flex-wrap">
         <p className="text-3xl">Skills & Services</p>
         <div className="flex justify-start flex-wrap gap-2">
           {skills.map((skill, idx) => {
@@ -101,47 +104,78 @@ function Infocard({
           <Button title={"Contact Serviceman"} size="lg" />
         </a>
       </div>
-      <div className=" flex flex-col items-center justify-center flex-wrap border mt-20 w-fit mx-auto py-10 px-3 rounded-xl border-gray-300 shadow-lg ">
+      <div className="flex mt-10 justify-center flex-col m-auto items-center mx-auto  w-[90%] md:w-[450px]  bg-white px-5 py-8 h-auto rounded-2xl  shadow-lg rounded-lg gap-5  ">
         <p className="text-3xl text-center">Customer Reviews</p>
-        <div className="flex flex-col items-center justify-center flex-wrap my-7">
-          <input
-            type="text"
-            value={feedbackData.username}
-            placeholder="Enter your name.."
-            className="border my-4 w-80 px-3 py-2 rounded-lg border-gray-500 focus:outline-0"
-            onChange={(e) => {
-              setFeedbackData({ ...feedbackData, username: e.target.value });
-            }}
-          />
-          <textarea
-            type="text"
-            value={feedbackData.discription}
-            placeholder="Enter Feedback.."
-            className="border my-4 w-80 px-3 py-2 rounded-lg border-gray-500 focus:outline-0"
-            onChange={(e) => {
-              setFeedbackData({ ...feedbackData, discription: e.target.value });
-            }}
-          />
-          <Button
-            title={" Submit"}
-            size="lg"
-            onClick={() => {
-              postData();
-              setFeedbackData({ username: "", discription: "" });
-              fetchedData();
-            }}
-          />
+        <div className='w-full p-3 flex flex-col gap-5  '>
+          <div className='flex flex-col gap-2'>
+            <Input
+              type="text"
+              value={feedbackData.username}
+              placeholder="Enter your name.."
+              className="border my-4 w-80 px-3 py-2 rounded-lg border-gray-500 focus:outline-0"
+              onChange={(e) => {
+                setFeedbackData({ ...feedbackData, username: e.target.value });
+              }}
+            />
+          </div>
+          <div className='flex flex-col gap-2'>
+            <textarea
+              type="text"
+              value={feedbackData.discription}
+              placeholder="Enter Feedback.."
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => {
+                setFeedbackData({ ...feedbackData, discription: e.target.value });
+              }}
+            />
+          </div>
         </div>
+        <Button
+          title={" Submit"}
+          size="lg"
+          onClick={() => {
+            postData();
+            fetchedData();
+          }}
+        />
+
       </div>
-      <div>
-        {feedbackList.map((item, idx) => {
-          return (
-            <div className="border w-[50vh] md:w-[100vh] mx-auto my-8 rounded-2xl border-gray-300 px-10 py-5 flex flex-col flex-wrap">
-              <p className="text-xl font-bold">{item.username}</p>
-              <p className="my-2 text-lg text-gray-500">{item.discription}</p>
+      <div className="max-w-3xl mx-auto mt-12 space-y-6 max-h-[400px] overflow-y-auto px-4 pb-6">
+
+        {feedbackList.length === 0 ? (
+          <p className="text-center text-gray-400 text-lg">
+            No reviews yet. Be the first to review!
+          </p>
+        ) : (
+          feedbackList.map((item, idx) => (
+            <div
+              key={idx}
+              className="bg-white shadow-sm hover:shadow-md transition duration-300 rounded-2xl p-6 border border-gray-100"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-[#2b92f3] to-blue-400 text-white font-bold text-lg">
+                  {item.username?.charAt(0).toUpperCase()}
+                </div>
+
+                <div>
+                  <p className="font-semibold text-lg">
+                    {item.username}
+                  </p>
+                  <p className="text-xs text-gray-400">
+
+                    {item.createdAt
+                      ? new Date(item.createdAt).toLocaleString()
+                      : "Just now"}
+                  </p>
+                </div>
+              </div>
+
+              <p className="text-gray-600 leading-relaxed">
+                {item.discription}
+              </p>
             </div>
-          );
-        })}
+          ))
+        )}
       </div>
       <Toaster />
     </div>
