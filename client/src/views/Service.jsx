@@ -4,6 +4,7 @@ import Servicecard from "../component/Servicecard";
 import { useEffect, useState } from "react";
 import Input from "../component/Input"
 import axios from "axios";
+import { Search } from "lucide-react";
 
 function Service() {
   const [serviceData, setServiceData] = useState([]);
@@ -30,7 +31,7 @@ function Service() {
   return (
     <div>
       <Navbar />
-      <div className="my-25 mx-5 flex flex-col items-center justify-center flex-wrap">
+      <div className="mt-25 mx-5 flex flex-col items-center justify-center flex-wrap">
         <p className="text-5xl text-center md:text-7xl font-bold text-[#2b92f3] mt-1">
           Browse Services
         </p>
@@ -38,16 +39,25 @@ function Service() {
           Find and book the right professional for your needs
         </p>
       </div>
-      <div className="px-5 py-10">
-        <Input
-        placeholder={"Search by location or srvice..."}
-        type="text"
-        value={searchItem}
-        onChange={(e)=>{
-          setSearchItem(e.target.value)
-        }}
-        />
-      </div>
+<div className="px-5 py-10 flex justify-center">
+  <div className="relative w-full max-w-2xl">
+    
+    <Search 
+      className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" 
+      size={20} 
+    />
+
+    <input
+      type="text"
+      placeholder="Search by location or service..."
+      value={searchItem}
+      onChange={(e) => setSearchItem(e.target.value)}
+      className="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 
+                 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+
+  </div>
+</div>
       <div className="flex justify-center items-center gap-10 flex-wrap mb-20">
         {filteredServices.map((service, idx) => {
           return (
