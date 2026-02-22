@@ -66,7 +66,7 @@ function Service() {
               img={service.userId.fullName.slice(" ")[0].toUpperCase()}
               name={service.userId.fullName}
               profession={service.field}
-              location={service.userId.location}
+              location={service.serviceAreas?.join(" ")}
               experience={service.experience}
               price={service.price}
                 onClick={() => {

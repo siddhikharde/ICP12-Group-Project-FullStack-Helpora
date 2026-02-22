@@ -39,7 +39,7 @@ function Serviceinfo() {
         key={serviceData?.userId?._id}
         name={serviceData?.userId?.fullName}
         profession={serviceData?.field}
-        location={serviceData?.userId?.location}
+        location={serviceData?.serviceAreas?.join(" ")}
         experience={serviceData?.experience}
         price={serviceData?.price}
         skills={serviceData?.skills}
