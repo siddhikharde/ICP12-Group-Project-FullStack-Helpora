@@ -3,11 +3,12 @@ import User from '../models/user.js';
 dotenv.config();
 
 const putUser=async (req, res)=>{
-  const {id, fullName, email, phoneNo}=req.body;
+  const {id, fullName, email, phoneNo, location}=req.body;
        const user=await User.findByIdAndUpdate(id,{
         fullName,
         email,
-         phoneNo
+         phoneNo, 
+         location
        })
        const userData=await User.findById(id);
        userData.password=undefined;

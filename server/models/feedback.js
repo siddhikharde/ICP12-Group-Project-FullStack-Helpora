@@ -9,7 +9,7 @@ const feedbackSchema = new Schema({
     type: String,
     required: true,
   },
-});
+},{timestamps:true});
 
 const feedback = model("feedbaack", feedbackSchema);
 
