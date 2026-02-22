@@ -12,7 +12,7 @@ function Servicecard({ img, name, profession, location, experience, price, onCli
         <p className="text-xl font-bold">{name}</p>
         <p className="text-gray-500">{profession}</p>
         <p className="absolute top-3 right-4 bg-green-400 cursor-pointer px-3 text-white py-1 rounded-2xl">
-          Verified
+          Available
         </p>
         <div className="flex items-center my-2">
           <MapPin size={20} className="mr-2 text-gray-500" />
