@@ -5,7 +5,7 @@
 ## 🚀 Live Demo
 
 Click here to view live demo of the wesite :
-[Helpora](www.google.com)
+[Helpora](https://icp12-group-project-fullstack-helpora-k9br.onrender.com)
 
 ## 📌 Features
 
