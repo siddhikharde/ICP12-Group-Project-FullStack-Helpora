@@ -21,16 +21,6 @@ const servicemenSchema = new Schema({
       type: [String],
       default: [],
     },
- rating: {
-      type: Number,
-      default: 0,
-      min: 0,
-      max: 5,
-    },
-     totalReviews: {
-      type: Number,
-      default: 0,
-    },
     availability:{
         type:Boolean,
         default:true
