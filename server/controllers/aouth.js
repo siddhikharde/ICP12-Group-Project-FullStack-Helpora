@@ -27,6 +27,7 @@ const postRegister=async (req,res)=>{
     })
   }
   
+  
   if(role=="Provide"){
      if (!field || !experience || !location || !price || !serviceAreas.length === 0) {
         return res.status(400).json({
