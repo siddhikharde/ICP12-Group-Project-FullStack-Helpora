@@ -29,7 +29,7 @@ const postRegister=async (req,res)=>{
   
   
   if(role=="Provide"){
-     if (!field || !experience || !location || !price || !serviceAreas.length === 0) {
+     if (!experience || !location || !price) {
         return res.status(400).json({
           success: false,
           message: "Provider details are required",
