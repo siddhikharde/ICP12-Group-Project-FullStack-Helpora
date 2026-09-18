@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router";
-import { HandHelping, Menu, X } from "lucide-react";
-import { getData } from "../utils";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router';
+import { HandHelping, Menu, X, Bell, Sparkles } from 'lucide-react';
+import { getData } from '../utils';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-
   const [userData, setUserData] = useState({});
 
   const fetchData = () => {
@@ -18,248 +17,146 @@ function Navbar() {
     fetchData();
   }, []);
 
+  const navItems = [
+    { label: 'Home', href: '/' },
+    { label: 'Services', href: '/service' },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' },
+  ];
+
   return (
-    <div>
-      <div className="flex justify-between items-center py-3 px-10 fixed top-0 w-full border-0 shadow-xl pb-2 border-gray-500 bg-white z-10">
-        <div className="flex items-center">
-          <Link to="/" className="flex items-center">
-            <HandHelping
-              size={45}
-              className="bg-[#2b92f3] p-2 text-white rounded-2xl"
-            />
-            <p className="text-2xl font-extrabold mx-1 text-[#2b92f3]">
-              Helpora
-            </p>
+    <header className="sticky top-0 z-40 px-4 pt-4 md:px-6">
+      <div className="mx-auto max-w-7xl rounded-full border border-slate-200/80 bg-white/75 px-4 py-3 shadow-[0_18px_40px_rgba(31,24,49,0.08)] backdrop-blur-xl md:px-6">
+        <div className="flex items-center justify-between gap-4">
+          <Link to="/" className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-[#ff7b65] text-white shadow-lg shadow-violet-200">
+              <HandHelping size={22} />
+            </span>
+            <span className="text-xl font-extrabold tracking-[-0.04em] text-slate-900">Helpora</span>
           </Link>
-        </div>
-        <div className="hidden md:flex justify-evenly items-center">
-          <Link
-            to="/"
-            className="text-xl mx-3 hover:text-[#2b92f3] scale-100 transition-all duration-300"
-          >
-            Home
-          </Link>
-          <Link
-            to="/service"
-            className="text-xl mx-3 hover:text-[#2b92f3] scale-100 transition-all duration-300"
-          >
-            Services
-          </Link>
-          <Link
-            to="/about"
-            className="text-xl mx-3 hover:text-[#2b92f3] scale-100 transition-all duration-300"
-          >
-            About
-          </Link>
-          <Link
-            to="/contact"
-            className="text-xl mx-3 hover:text-[#2b92f3] scale-100 transition-all duration-300"
-          >
-            Contact
-          </Link>
-        </div>
-        <div className="relative hidden md:flex justify-evenly items-center cursor-pointer">
-          {userData?.fullName ? (
-            <div
-              className="flex items-center"
-              onClick={() => {
-                setIsProfileOpen(!isProfileOpen);
-              }}
-            >
-              <p className="text-xl px-3 py-1 font-bold bg-[#2b92f3] rounded-full text-white text-center mx-1">
-                {userData.fullName.slice(" ")[0]}
-              </p>
-              <p className="mr-4 text-xl font-bold">{userData.fullName}</p>
-            </div>
-          ) : (
-            <div>
+
+          <nav className="hidden items-center gap-1 rounded-full border border-slate-200 bg-slate-50/80 p-1 md:flex">
+            {navItems.map((item) => (
               <Link
-                to="/login"
-                className="text-xl mx-3 px-3 py-2 rounded-2xl hover:bg-[#FACD47] hover:text-white scale-100 transition-all duration-300"
+                key={item.href}
+                to={item.href}
+                className="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 transition hover:bg-white hover:text-slate-900"
               >
-                Login
+                {item.label}
               </Link>
-            </div>
-          )}
+            ))}
+          </nav>
 
-          {isProfileOpen && (
-            <div className="absolute bg-white border border-gray-300 w-50 h-20 top-13 right-24 rounded-b-lg">
-              <X
-                size={35}
-                className="absolute right-2 top-2"
-                onClick={() => {
-                  setIsProfileOpen(false);
-                }}
-              />
+          <div className="hidden items-center gap-3 md:flex">
+            <button className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 transition hover:border-violet-200 hover:text-violet-700">
+              <Bell size={16} />
+            </button>
 
-              <div className="flex flex-col items-start px-4 py-7">
-                {userData?.role === "Provide" ? (
-                  <div className="flex flex-col items-start">
-                    <Link
-                      to="/servicemen-profile"
-                      className="text-xl hover:text-[#2b92f3]"
-                    >
-                      Service Profile
-                    </Link>
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-start">
-                    <Link
-                      to="/profile"
-                      className="text-xl hover:text-[#2b92f3]"
-                    >
-                      User Profile
-                    </Link>
+            {userData?.fullName ? (
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  className="flex items-center gap-3 rounded-full border border-slate-200 bg-white px-2 py-1.5 shadow-sm transition hover:border-violet-200"
+                >
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-[#ff7b65] text-sm font-bold text-white">
+                    {userData.fullName.charAt(0).toUpperCase()}
+                  </span>
+                  <span className="pr-1 text-sm font-semibold text-slate-800">{userData.fullName}</span>
+                </button>
+
+                {isProfileOpen && (
+                  <div className="absolute right-0 top-14 w-52 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl">
+                    <div className="mb-2 flex items-center justify-between">
+                      <span className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Account</span>
+                      <button type="button" onClick={() => setIsProfileOpen(false)} className="text-slate-400 hover:text-slate-700">
+                        <X size={16} />
+                      </button>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Link to={userData?.role === 'Provide' ? '/servicemen-profile' : '/profile'} className="block rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-violet-700" onClick={() => setIsProfileOpen(false)}>
+                        {userData?.role === 'Provide' ? 'Service Profile' : 'User Profile'}
+                      </Link>
+                    </div>
                   </div>
                 )}
               </div>
-            </div>
-          )}
-
-          {userData ? (
-            <div>
-              <button
-                onClick={() => {
-                  localStorage.removeItem("user");
-                  setUserData({});
-                  window.location.href = "/";
-                }}
-                className="text-xl mx-3 bg-red-500 cursor-pointer hover:opacity-70 px-3 py-2 rounded-2xl text-white text-center scale-100 transition-all duration-300"
-              >
-                Logout
-              </button>
-            </div>
-          ) : (
-            <div>
-              <Link
-                to="/register"
-                className="text-xl mx-3 bg-[#2b92f3] hover:opacity-70 px-3 py-2 rounded-2xl text-white text-center scale-100 transition-all duration-300"
-              >
-                Signup
-              </Link>
-            </div>
-          )}
-        </div>
-        <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={35} /> : <Menu size={35} />}
-        </button>
-      </div>
-      {isOpen && (
-        <div className="md:hidden fixed top-16 left-0 w-full bg-white border-b border-gray-300 z-10">
-          <div className="flex flex-col items-center py-4">
-            <Link
-              to="/"
-              className="font-bold text-xl py-2 hover:text-[#2b92f3]"
-              onClick={() => setIsOpen(false)}
-            >
-              Home
-            </Link>
-            <Link
-              to="/service"
-              className="font-bold text-xl py-2 hover:text-[#2b92f3]"
-              onClick={() => setIsOpen(false)}
-            >
-              Services
-            </Link>
-            <Link
-              to="/about"
-              className="font-bold text-xl py-2 hover:text-[#2b92f3]"
-              onClick={() => setIsOpen(false)}
-            >
-              About
-            </Link>
-            <Link
-              to="/contact"
-              className="font-bold text-xl py-2 hover:text-[#2b92f3]"
-              onClick={() => setIsOpen(false)}
-            >
-              Contact
-            </Link>
-            <span className="relative my-3">
-              {userData?.fullName ? (
-                <div
-                  className="flex items-center"
-                  onClick={() => {
-                    setIsProfileOpen(!isProfileOpen);
-                  }}
-                >
-                  <p className="text-xl px-3 py-1 font-bold bg-[#2b92f3] rounded-full text-white text-center mx-1">
-                    {userData.fullName.slice(" ")[0]}
-                  </p>
-                  <p className="mr-4 text-xl font-bold">{userData.fullName}</p>
-                </div>
-              ) : (
-                <div>
-                  <Link
-                    to="/login"
-                    className="font-bold text-xl py-2 hover:text-[#2b92f3]"
-                  >
-                    Login
-                  </Link>
-                </div>
-              )}
-            </span>
-            {isProfileOpen && (
-              <div className="absolute bg-white border border-gray-300 w-50 h-20 top-58 right-auto rounded-b-lg">
-                <X
-                  size={35}
-                  className="absolute right-2 top-2"
-                  onClick={() => {
-                    setIsProfileOpen(false);
-                  }}
-                />
-
-                <div className="flex flex-col items-start px-4 py-7">
-                  {userData?.role === "Provide" ? (
-                    <div className="flex flex-col items-start">
-                      <Link
-                        to="/servicemen-profile"
-                        className="text-xl hover:text-[#2b92f3]"
-                      >
-                        Service Profile
-                      </Link>
-                    </div>
-                  ) : (
-                    <div className="flex flex-col items-start">
-                      <Link
-                        to="/profile"
-                        className="text-xl hover:text-[#2b92f3]"
-                      >
-                        User Profile
-                      </Link>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {userData ? (
-              <div>
-                <button
-                  onClick={() => {
-                    localStorage.removeItem("user");
-                    setUserData({});
-                    window.location.href = "/";
-                  }}
-                  className="font-bold text-xl py-2 text-red-500"
-                >
-                  Logout
-                </button>
-              </div>
             ) : (
-              <div>
-                <Link
-                  to="/register"
-                  className="font-bold text-xl py-2 hover:text-[#2b92f3]"
-                >
-                  Signup
+              <div className="flex items-center gap-2">
+                <Link to="/login" className="rounded-full px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100">
+                  Login
+                </Link>
+                <Link to="/register" className="premium-button px-4 py-2.5 text-sm">
+                  Join now
                 </Link>
               </div>
             )}
+
+            {userData?.fullName && (
+              <button
+                type="button"
+                onClick={() => {
+                  localStorage.removeItem('user');
+                  setUserData({});
+                  window.location.href = '/';
+                }}
+                className="rounded-full border border-rose-200 bg-rose-50 px-4 py-2.5 text-sm font-semibold text-rose-600 transition hover:bg-rose-100"
+              >
+                Logout
+              </button>
+            )}
+          </div>
+
+          <button type="button" className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white md:hidden" onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+      </div>
+
+      {isOpen && (
+        <div className="mx-auto mt-3 max-w-7xl rounded-3xl border border-slate-200 bg-white/90 p-4 shadow-xl backdrop-blur-xl md:hidden">
+          <div className="space-y-2">
+            {navItems.map((item) => (
+              <Link key={item.href} to={item.href} className="block rounded-2xl px-3 py-2.5 text-base font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-700" onClick={() => setIsOpen(false)}>
+                {item.label}
+              </Link>
+            ))}
+
+            <div className="mt-3 space-y-2 border-t border-slate-200 pt-3">
+              {userData?.fullName ? (
+                <>
+                  <Link to={userData?.role === 'Provide' ? '/servicemen-profile' : '/profile'} className="block rounded-2xl px-3 py-2.5 text-base font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-700" onClick={() => setIsOpen(false)}>
+                    {userData?.role === 'Provide' ? 'Service Profile' : 'User Profile'}
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      localStorage.removeItem('user');
+                      setUserData({});
+                      setIsOpen(false);
+                      window.location.href = '/';
+                    }}
+                    className="w-full rounded-2xl border border-rose-200 bg-rose-50 px-3 py-2.5 text-left text-base font-semibold text-rose-600"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" className="block rounded-2xl px-3 py-2.5 text-base font-semibold text-slate-700 hover:bg-slate-50 hover:text-violet-700" onClick={() => setIsOpen(false)}>
+                    Login
+                  </Link>
+                  <Link to="/register" className="premium-button mt-1 w-full px-4 py-3" onClick={() => setIsOpen(false)}>
+                    Join now
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
         </div>
       )}
-    </div>
+    </header>
   );
 }
 

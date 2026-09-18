@@ -1,134 +1,75 @@
-import React from "react";
-import {
-  HandHelping,
-  Instagram,
-  Facebook,
-  Twitter,
-  Linkedin,
-  MapPin,
-  Phone,
-  Mail,
-} from "lucide-react";
-import { Link } from "react-router";
+import React from 'react';
+import { HandHelping, Instagram, Facebook, Twitter, Linkedin, MapPin, Phone, Mail } from 'lucide-react';
+import { Link } from 'react-router';
 
 function Footer() {
   return (
-    <div className="border-t border-gray-300 bg-[#eef0f4]">
-      <div className="flex items-start justify-start md:justify-around bg-[#eef0f4] p-8 md:p-16 flex-wrap">
-        <div className="my-9">
-          <div className="flex items-center">
-            <HandHelping
-              size={45}
-              className="bg-[#2b92f3] p-2  rounded-2xl"
-            />
-            <p className="text-3xl font-bold mx-1 text-[#2b92f3]">
-              Helpora
-            </p>
+    <footer className="mt-20 border-t border-slate-200 bg-[#f8f4ef]">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 md:grid-cols-[1.4fr_0.8fr_1.1fr] md:px-6">
+        <div>
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-[#ff7b65] text-white shadow-lg shadow-violet-200">
+              <HandHelping size={22} />
+            </span>
+            <span className="text-2xl font-extrabold tracking-[-0.04em] text-slate-900">Helpora</span>
           </div>
-          <p className=" mt-5 w-60 md:w-80 text-lg">
-            Your trusted platform for booking professional services.
+          <p className="mt-5 max-w-sm text-base leading-7 text-slate-600">
+            Your trusted local service platform for premium home support, fast bookings, and happier everyday routines.
           </p>
-          <div className="my-5 flex">
-            <a href="https://www.instagram.com/p/DUifv3BkT_c/">
-              <Instagram
-                size={45}
-                className="border border-gray-300  p-3 m-2 rounded-4xl hover:bg-[#2b92f3] duration-300 cursor-pointer"
-              />
-            </a>
-            <a href="https://www.facebook.com/LocalServiceAds/">
-              <Facebook
-                size={45}
-                className="border border-gray-300  p-3 m-2 rounded-4xl hover:bg-[#2b92f3] duration-300 cursor-pointer"
-              />
-            </a>
-
-            <a href="https://x.com/">
-              <Twitter
-                size={45}
-                className="border border-gray-300  p-3 m-2 rounded-4xl hover:bg-[#2b92f3] duration-300 cursor-pointer"
-              />
-            </a>
-
-            <a href="https://www.linkedin.com/pulse/local-service-platform-market-size-2026-innovation-izytf/">
-              <Linkedin
-                size={45}
-                className="border border-gray-300 p-3 m-2 rounded-4xl hover:bg-[#2b92f3] duration-300 cursor-pointer"
-              />
-            </a>
-          </div>
-        </div>
-        <div className="flex flex-col items-start m-5">
-          <p className=" text-2xl text-start my-3">Quick Links</p>
-          <div className="flex flex-col  justify-evenly items-start">
-            <Link
-              to="/"
-              className=" text-xl mx-3 my-2 hover:text-[#2b92f3] scale-100 transition-all duration-300"
-            >
-              Home
-            </Link>
-            <Link
-              to="/service"
-              className=" text-xl mx-3 my-2 hover:text-[#2b92f3] scale-100 transition-all duration-300"
-            >
-              Services
-            </Link>
-            <Link
-              to="/about"
-              className="text-xl mx-3 my-2 hover:text-[#2b92f3] scale-100 transition-all duration-300"
-            >
-              About
-            </Link>
-            <Link
-              to="/contact"
-              className="text-xl mx-3 my-2 hover:text-[#2b92f3] scale-100 transition-all duration-300"
-            >
-              Contact
-            </Link>
+          <div className="mt-6 flex items-center gap-3">
+            {[Instagram, Facebook, Twitter, Linkedin].map((Icon, index) => (
+              <a key={index} href="https://example.com" className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 transition hover:border-violet-200 hover:text-violet-700">
+                <Icon size={18} />
+              </a>
+            ))}
           </div>
         </div>
 
-        <div className="flex flex-col items-start m-5">
-          <p className=" text-2xl text-center my-3">Contact Us</p>
-          <div className="flex flex-col justify-evenly h-50">
-            <div className="flex justify-evenly items-start">
-              <MapPin size={20} className="text-[#2b92f3] mr-4" />
-              <p className="text-start text-sm w-60">
-                Loni Pravara, 413-736, Maharastra,India
-              </p>
-            </div>
-            <div className="flex justify-evenly items-start">
-              <Phone size={20} className="text-[#2b92f3] mr-4" />
-              <a href="tel:+919876543210" className="text-start text-sm  w-60 cursor-pointer hover:text-[#2b92f3] duration-300">+91 9876543210</a>
-            </div>
+        <div>
+          <p className="mb-4 text-lg font-bold text-slate-900">Quick links</p>
+          <div className="space-y-3">
+            {[
+              ['Home', '/'],
+              ['Services', '/service'],
+              ['About', '/about'],
+              ['Contact', '/contact'],
+            ].map(([label, href]) => (
+              <Link key={href} to={href} className="block text-sm font-medium text-slate-600 transition hover:text-violet-700">
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
 
-            <div className="flex justify-evenly items-start">
-              <Mail size={20} className="text-[#2b92f3] mr-4 " />
-              <a href="mailto:support@helpora.com" className="text-start text-sm  w-60 cursor-pointer hover:text-[#2b92f3] duration-300">support@helpora.com</a>
+        <div>
+          <p className="mb-4 text-lg font-bold text-slate-900">Contact</p>
+          <div className="space-y-4 text-sm text-slate-600">
+            <div className="flex items-start gap-3">
+              <MapPin size={18} className="mt-0.5 text-violet-600" />
+              <span>Loni Pravara, Maharashtra, India</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <Phone size={18} className="mt-0.5 text-violet-600" />
+              <a href="tel:+919876543210" className="hover:text-violet-700">+91 98765 43210</a>
+            </div>
+            <div className="flex items-start gap-3">
+              <Mail size={18} className="mt-0.5 text-violet-600" />
+              <a href="mailto:support@helpora.com" className="hover:text-violet-700">support@helpora.com</a>
             </div>
           </div>
         </div>
       </div>
-      <div className="border-t px-10  flex flex-col-reverse py-4 md:flex-row justify-between items-center">
-        <p className="py-5 text-center">
-          © 2026 Helpora. All rights reserved.
-        </p>
 
-        <div className="flex items-center">
-          <a
-            href="https://www.termsfeed.com/public/uploads/2021/12/sample-privacy-policy-template.pdf"
-            className="hover:text-[#2b92f3] cursor-pointer duration-300 mx-3"
-          >
-            Privacy Policy
-          </a>
-          <a
-            href="https://www.termsfeed.com/public/uploads/2021/12/sample-terms-conditions-agreement.pdf"
-            className="hover:text-[#2b92f3] cursor-pointer duration-300 mx-3"
-          >
-            Terms of Service
-          </a>
+      <div className="border-t border-slate-200 bg-[#f3efe9]">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-5 text-sm text-slate-600 md:flex-row md:px-6">
+          <p>© 2026 Helpora. All rights reserved.</p>
+          <div className="flex items-center gap-6">
+            <a href="https://example.com" className="hover:text-violet-700">Privacy Policy</a>
+            <a href="https://example.com" className="hover:text-violet-700">Terms of Service</a>
+          </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }
 
